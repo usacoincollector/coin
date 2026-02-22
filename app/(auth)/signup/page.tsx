@@ -1,4 +1,5 @@
 ﻿import { redirect } from 'next/navigation';
+import Link from 'next/link';
 import { AuthForm } from '@/components/auth-form';
 import { createServerClient } from '@/lib/supabase-server';
 
@@ -12,5 +13,12 @@ export default async function SignupPage() {
     redirect('/dashboard');
   }
 
-  return <AuthForm mode="signup" />;
+  return (
+    <section className="space-y-4">
+      <Link className="text-sm text-gray-600 hover:text-gray-900" href="/">
+        ← Back to homepage
+      </Link>
+      <AuthForm mode="signup" />
+    </section>
+  );
 }

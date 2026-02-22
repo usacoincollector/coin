@@ -1,4 +1,5 @@
-﻿import { redirect } from 'next/navigation';
+﻿import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { createServerClient } from '@/lib/supabase-server';
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -11,5 +12,14 @@ export default async function DashboardLayout({ children }: { children: React.Re
     redirect('/login');
   }
 
-  return <>{children}</>;
+  return (
+    <section className="space-y-4">
+      <div>
+        <Link className="text-sm text-gray-600 hover:text-gray-900" href="/">
+          ← Back to homepage
+        </Link>
+      </div>
+      {children}
+    </section>
+  );
 }

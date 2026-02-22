@@ -10,7 +10,7 @@ const categories = [
     copy: 'PVC-free acrylic capsules designed to protect Silver Eagles, ASE sizes, and more.'
   },
   {
-    title: 'Single-Row Storage',
+    title: 'Storage Boxes',
     copy: 'Display-ready storage boxes that keep flips and holders organized and dust resistant.'
   },
   {

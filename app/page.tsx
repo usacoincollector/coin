@@ -27,7 +27,7 @@ export default function HomePage() {
         <div className="pointer-events-none absolute -bottom-16 left-[-10%] h-48 w-[120%] rounded-[100%] border-t-8 border-red-500/90 bg-blue-950/80" />
         <div className="relative z-10 max-w-3xl space-y-5">
           <p className="inline-block rounded-full border border-white/40 bg-white/10 px-3 py-1 text-xs tracking-[0.2em]">
-            USA COIN COLLECTOR
+            USA Coin Collector
           </p>
           <h1 className="text-4xl leading-tight md:text-6xl [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
             Premium Coin Flips, Capsules, and Storage for Serious Collectors

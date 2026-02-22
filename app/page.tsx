@@ -6,7 +6,7 @@ const categories = [
     copy: 'Ultra-white, archival-safe cardboard flips with clean windows and reliable staples.'
   },
   {
-    title: 'Crystal-Clear Capsules',
+    title: 'Coin Capsules',
     copy: 'PVC-free acrylic capsules designed to protect Silver Eagles, ASE sizes, and more.'
   },
   {
@@ -109,7 +109,7 @@ export default function HomePage() {
               className="rounded-xl border border-slate-200 bg-gradient-to-b from-slate-50 to-white p-5"
             >
               <h3 className="text-2xl text-[#102a63] [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
-                {category.title}
+                <p>{category.title}</p>
               </h3>
               <p className="mt-2 text-slate-600">{category.copy}</p>
             </article>

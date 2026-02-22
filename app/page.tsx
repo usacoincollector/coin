@@ -29,9 +29,9 @@ export default function HomePage() {
           <p className="inline-block rounded-full border border-white/40 bg-white/10 px-3 py-1 text-xs tracking-[0.2em]">
             USA Coin Collector
           </p>
-          <h1 className="text-4xl leading-tight md:text-6xl [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
-            Premium Coin Flips, Capsules, and Storage for Serious Collectors
-          </h1>
+          <p className="text-4xl leading-tight md:text-6xl [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
+            USA Coin Collector
+          </p>
           <p className="max-w-2xl text-base text-blue-50 md:text-lg">
             Coin Shield products are built around archival safety, clean presentation, and long-term protection. Shop
             our storefronts or access your personal Digital Vault.

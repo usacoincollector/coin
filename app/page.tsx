@@ -93,7 +93,7 @@ export default function HomePage() {
       <section className="rounded-2xl border border-slate-200 bg-white p-6 md:p-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-xs font-semibold tracking-[0.22em] text-slate-500">PRODUCT CATEGORIES</p>
+            <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 h-6">PRODUCT CATEGORIES</p>
             <h2 className="mt-2 text-4xl text-[#0f1f57] [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
               Coin Shield Essentials
             </h2>

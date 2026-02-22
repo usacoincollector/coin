@@ -14,7 +14,7 @@ const categories = [
     copy: 'Display-ready storage boxes that keep flips and holders organized and dust resistant.'
   },
   {
-    title: 'Collector Bundles',
+    title: 'Currency Storage',
     copy: 'Starter kits with flips, capsules, and storage options for fast collection setup.'
   }
 ];

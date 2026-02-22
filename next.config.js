@@ -1,5 +1,14 @@
 ﻿/** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: '/digitalvault',
+        destination: '/dashboard',
+        permanent: false
+      }
+    ];
+  },
   images: {
     remotePatterns: [
       {

@@ -6,11 +6,11 @@ const categories = [
     copy: 'Ultra-white, archival-safe cardboard flips with clean windows and reliable staples.'
   },
   {
-    title: 'Crystal-Clear Capsules',
+    title: 'Coin Capsules',
     copy: 'PVC-free acrylic capsules designed to protect Silver Eagles, ASE sizes, and more.'
   },
   {
-    title: 'Single-Row Storage',
+    title: 'Storage Boxes',
     copy: 'Display-ready storage boxes that keep flips and holders organized and dust resistant.'
   },
   {
@@ -27,11 +27,11 @@ export default function HomePage() {
         <div className="pointer-events-none absolute -bottom-16 left-[-10%] h-48 w-[120%] rounded-[100%] border-t-8 border-red-500/90 bg-blue-950/80" />
         <div className="relative z-10 max-w-3xl space-y-5">
           <p className="inline-block rounded-full border border-white/40 bg-white/10 px-3 py-1 text-xs tracking-[0.2em]">
-            USA COIN COLLECTOR
+            USA Coin Collector
           </p>
-          <h1 className="text-4xl leading-tight md:text-6xl [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
-            Premium Coin Flips, Capsules, and Storage for Serious Collectors
-          </h1>
+          <p className="text-4xl leading-tight md:text-6xl [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
+            USA Coin Collector
+          </p>
           <p className="max-w-2xl text-base text-blue-50 md:text-lg">
             Coin Shield products are built around archival safety, clean presentation, and long-term protection. Shop
             our storefronts or access your personal Digital Vault.
@@ -93,7 +93,7 @@ export default function HomePage() {
       <section className="rounded-2xl border border-slate-200 bg-white p-6 md:p-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-xs font-semibold tracking-[0.22em] text-slate-500">PRODUCT CATEGORIES</p>
+            <p className="text-xs font-semibold tracking-[0.22em] text-slate-500 h-6">PRODUCT CATEGORIES</p>
             <h2 className="mt-2 text-4xl text-[#0f1f57] [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
               Coin Shield Essentials
             </h2>
@@ -109,7 +109,7 @@ export default function HomePage() {
               className="rounded-xl border border-slate-200 bg-gradient-to-b from-slate-50 to-white p-5"
             >
               <h3 className="text-2xl text-[#102a63] [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
-                {category.title}
+                <p>{category.title}</p>
               </h3>
               <p className="mt-2 text-slate-600">{category.copy}</p>
             </article>

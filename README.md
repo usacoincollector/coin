@@ -51,15 +51,12 @@ Use `.env.example`:
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY` (reserved for future admin/server tasks)
 - `NEXT_PUBLIC_APP_URL`
-- `NEXT_PUBLIC_SANITY_PROJECT_ID` (optional; enables Sanity-managed homepage content)
-- `NEXT_PUBLIC_SANITY_DATASET` (defaults to `production`)
-- `SANITY_API_VERSION` (defaults to `2025-02-19`)
 - `STRIPE_SECRET_KEY`
 - `STRIPE_WEBHOOK_SECRET`
 
 ## 4. Routes
 
-- `/` landing page (Sanity-managed if `NEXT_PUBLIC_SANITY_PROJECT_ID` is set and a `homepage` doc exists)
+- `/` landing page
 - `/digitalvault` app entry page
 - `/login` login
 - `/signup` signup

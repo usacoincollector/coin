@@ -8,8 +8,12 @@ export default async function HomePage() {
   const content = await getBuilderPageContent('/');
 
   if (!content) {
+    console.log('[Builder Debug] Rendering static homepage fallback for /');
     return <HomePageStatic />;
   }
 
+  console.log('[Builder Debug] Rendering Builder homepage content for /', {
+    contentId: content?.id ?? null
+  });
   return <BuilderPage content={content} model="page" />;
 }

@@ -22,11 +22,26 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
     const { error: authError } =
       mode === 'login'
         ? await supabase.auth.signInWithPassword({ email, password })
-        : await supabase.auth.signUp({ email, password });
+        : await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+              emailRedirectTo: `${window.location.origin}/login`
+            }
+          });
 
     if (authError) {
       setError(authError.message);
       setLoading(false);
+      return;
+    }
+
+    if (mode === 'signup') {
+      window.alert(
+        "Account created successfully! We've sent a verification link to your email address. Please verify your email before logging in."
+      );
+      router.push('/login');
+      router.refresh();
       return;
     }
 

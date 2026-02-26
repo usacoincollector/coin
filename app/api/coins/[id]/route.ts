@@ -1,17 +1,7 @@
-﻿import { NextResponse } from 'next/server';
-import { z } from 'zod';
+import { NextResponse } from 'next/server';
 import { createRouteClient } from '@/lib/supabase-route';
-
-const coinSchema = z.object({
-  name: z.string().trim().min(1).max(120),
-  year: z.number().int().min(1000).max(3000),
-  mint_mark: z.string().trim().max(24).optional().or(z.literal('')),
-  purchase_price: z.number().nonnegative(),
-  estimated_value: z.number().nonnegative().optional().nullable(),
-  storage_location: z.string().trim().min(1).max(120),
-  notes: z.string().trim().max(5000).optional().or(z.literal('')),
-  image_urls: z.array(z.string().url()).min(0).max(3)
-});
+import { normalizeCoinImageRef } from '@/lib/coin-images';
+import { coinInputSchema } from '@/lib/validation';
 
 export async function PATCH(request: Request, { params }: { params: { id: string } }) {
   const supabase = createRouteClient();
@@ -23,14 +13,20 @@ export async function PATCH(request: Request, { params }: { params: { id: string
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const body = await request.json();
-  const parsed = coinSchema.safeParse(body);
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON payload.' }, { status: 400 });
+  }
+  const parsed = coinInputSchema.safeParse(body);
 
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
   }
 
   const payload = parsed.data;
+  const imageUrls = payload.image_urls.map(normalizeCoinImageRef).filter(Boolean);
 
   const { error } = await supabase
     .from('coins')
@@ -42,8 +38,7 @@ export async function PATCH(request: Request, { params }: { params: { id: string
       estimated_value: payload.estimated_value ?? null,
       storage_location: payload.storage_location,
       notes: payload.notes || null,
-      image_urls: payload.image_urls,
-      updated_at: new Date().toISOString()
+      image_urls: imageUrls
     })
     .eq('id', params.id)
     .eq('user_id', user.id);

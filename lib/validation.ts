@@ -8,7 +8,7 @@ export const coinInputSchema = z.object({
   estimated_value: z.number().nonnegative().nullable().optional(),
   storage_location: z.string().trim().min(1).max(120),
   notes: z.string().trim().max(5000).optional().or(z.literal('')),
-  image_urls: z.array(z.string().url()).max(3)
+  image_urls: z.array(z.string().trim().min(1).max(500)).max(3)
 });
 
 export type CoinInput = z.infer<typeof coinInputSchema>;

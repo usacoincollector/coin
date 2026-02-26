@@ -2,6 +2,11 @@
 import Papa from 'papaparse';
 import { createRouteClient } from '@/lib/supabase-route';
 
+function toDateOnly(value: string | null) {
+  if (!value) return '';
+  return value.split('T')[0] || '';
+}
+
 export async function GET() {
   const supabase = createRouteClient();
   const {
@@ -22,7 +27,19 @@ export async function GET() {
     return NextResponse.json({ error: error.message }, { status: 400 });
   }
 
-  const csv = Papa.unparse(coins);
+  const exportRows = (coins ?? []).map((coin) => ({
+    name: coin.name,
+    year: coin.year,
+    mint_mark: coin.mint_mark,
+    purchase_price: coin.purchase_price,
+    estimated_value: coin.estimated_value,
+    storage_location: coin.storage_location,
+    notes: coin.notes,
+    Created_On: toDateOnly(coin.created_at),
+    Updated_On: toDateOnly(coin.updated_at)
+  }));
+
+  const csv = Papa.unparse(exportRows);
 
   return new NextResponse(csv, {
     status: 200,

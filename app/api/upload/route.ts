@@ -1,5 +1,14 @@
-﻿import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
+import { COIN_IMAGE_BUCKET } from '@/lib/coin-images';
 import { createRouteClient } from '@/lib/supabase-route';
+
+const MIME_EXTENSION_MAP: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+  'image/gif': 'gif',
+  'image/avif': 'avif'
+};
 
 export async function POST(request: Request) {
   const supabase = createRouteClient();
@@ -18,36 +27,41 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Upload 1-3 images.' }, { status: 400 });
   }
 
-  const uploadedUrls: string[] = [];
+  const validatedFiles = files.map((file) => {
+    const ext = MIME_EXTENSION_MAP[file.type];
+    return { file, ext };
+  });
 
-  for (const file of files) {
-    if (!file.type.startsWith('image/')) {
-      return NextResponse.json({ error: 'Only image files are allowed.' }, { status: 400 });
+  for (const { file, ext } of validatedFiles) {
+    if (!ext) {
+      return NextResponse.json({ error: 'Only JPG, PNG, WEBP, GIF, or AVIF images are allowed.' }, { status: 400 });
     }
 
     if (file.size > 5 * 1024 * 1024) {
       return NextResponse.json({ error: 'Each file must be 5MB or less.' }, { status: 400 });
     }
+  }
 
-    const ext = file.name.split('.').pop() || 'jpg';
+  const uploadedPaths: string[] = [];
+
+  for (const { file, ext } of validatedFiles) {
     const path = `${user.id}/${crypto.randomUUID()}.${ext}`;
     const bytes = await file.arrayBuffer();
 
-    const { error } = await supabase.storage.from('coin-images').upload(path, bytes, {
+    const { error } = await supabase.storage.from(COIN_IMAGE_BUCKET).upload(path, bytes, {
       contentType: file.type,
       upsert: false
     });
 
     if (error) {
+      if (uploadedPaths.length > 0) {
+        await supabase.storage.from(COIN_IMAGE_BUCKET).remove(uploadedPaths);
+      }
       return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
-    const {
-      data: { publicUrl }
-    } = supabase.storage.from('coin-images').getPublicUrl(path);
-
-    uploadedUrls.push(publicUrl);
+    uploadedPaths.push(path);
   }
 
-  return NextResponse.json({ urls: uploadedUrls });
+  return NextResponse.json({ paths: uploadedPaths });
 }

@@ -28,6 +28,9 @@ export default async function DigitalVaultPage() {
             </Link>
           </>
         )}
+        <Link className="px-4 py-2 text-sm font-medium" href="/">
+          Go back to homepage
+        </Link>
       </div>
     </section>
   );

@@ -7,9 +7,10 @@ import { coinInputSchema, type CoinInput } from '@/lib/validation';
 type CoinFormProps = {
   mode: 'create' | 'edit';
   initialValue?: Partial<CoinInput> & { id?: string };
+  initialImagePreviewUrls?: Record<string, string>;
 };
 
-export function CoinForm({ mode, initialValue }: CoinFormProps) {
+export function CoinForm({ mode, initialValue, initialImagePreviewUrls = {} }: CoinFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -20,10 +21,11 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
   const [estimatedValue, setEstimatedValue] = useState(initialValue?.estimated_value?.toString() || '');
   const [storageLocation, setStorageLocation] = useState(initialValue?.storage_location || '');
   const [notes, setNotes] = useState(initialValue?.notes || '');
-  const [imageUrls, setImageUrls] = useState<string[]>(initialValue?.image_urls || []);
+  const [imagePaths, setImagePaths] = useState<string[]>(initialValue?.image_urls || []);
+  const [imagePreviewUrls, setImagePreviewUrls] = useState<Record<string, string>>(initialImagePreviewUrls);
   const [files, setFiles] = useState<File[]>([]);
 
-  const canUploadMore = useMemo(() => imageUrls.length + files.length < 3, [imageUrls.length, files.length]);
+  const canUploadMore = useMemo(() => imagePaths.length + files.length < 3, [imagePaths.length, files.length]);
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -31,7 +33,7 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
     setError('');
 
     try {
-      let mergedImageUrls = [...imageUrls];
+      let mergedImagePaths = [...imagePaths];
 
       if (files.length > 0) {
         const data = new FormData();
@@ -44,7 +46,7 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
           throw new Error(uploadJson.error || 'Image upload failed.');
         }
 
-        mergedImageUrls = [...mergedImageUrls, ...uploadJson.urls];
+        mergedImagePaths = [...mergedImagePaths, ...(uploadJson.paths || [])];
       }
 
       const parsed = coinInputSchema.safeParse({
@@ -55,7 +57,7 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
         estimated_value: estimatedValue ? Number(estimatedValue) : null,
         storage_location: storageLocation,
         notes,
-        image_urls: mergedImageUrls
+        image_urls: mergedImagePaths
       });
 
       if (!parsed.success) {
@@ -142,17 +144,34 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
           disabled={!canUploadMore}
           id="images"
           multiple
-          onChange={(e) => setFiles(Array.from(e.target.files || []).slice(0, 3 - imageUrls.length))}
+          onChange={(e) => setFiles(Array.from(e.target.files || []).slice(0, 3 - imagePaths.length))}
           type="file"
         />
-        {imageUrls.length > 0 && (
+        {imagePaths.length > 0 && (
           <div className="grid grid-cols-3 gap-2">
-            {imageUrls.map((url) => (
-              <div className="relative" key={url}>
-                <img alt="Coin" className="h-20 w-full rounded-md object-cover" src={url} />
+            {imagePaths.map((path) => (
+              <div className="relative" key={path}>
+                {imagePreviewUrls[path] || path.startsWith('http://') || path.startsWith('https://') ? (
+                  <img
+                    alt="Coin"
+                    className="h-20 w-full rounded-md object-cover"
+                    src={imagePreviewUrls[path] || path}
+                  />
+                ) : (
+                  <div className="flex h-20 w-full items-center justify-center rounded-md border border-line bg-gray-50 text-xs text-gray-500">
+                    Preview unavailable
+                  </div>
+                )}
                 <button
                   className="absolute right-1 top-1 border-0 bg-white px-1 py-0 text-xs"
-                  onClick={() => setImageUrls((curr) => curr.filter((u) => u !== url))}
+                  onClick={() => {
+                    setImagePaths((curr) => curr.filter((item) => item !== path));
+                    setImagePreviewUrls((curr) => {
+                      const next = { ...curr };
+                      delete next[path];
+                      return next;
+                    });
+                  }}
                   type="button"
                 >
                   Remove

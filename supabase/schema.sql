@@ -65,17 +65,21 @@ using (auth.uid() = user_id);
 
 -- Storage bucket and policy
 insert into storage.buckets (id, name, public)
-values ('coin-images', 'coin-images', true)
-on conflict (id) do nothing;
+values ('coin-images', 'coin-images', false)
+on conflict (id) do update set public = excluded.public;
 
 drop policy if exists "public_can_view_coin_images" on storage.objects;
 drop policy if exists "users_upload_own_coin_images" on storage.objects;
 drop policy if exists "users_delete_own_coin_images" on storage.objects;
+drop policy if exists "users_select_own_coin_images" on storage.objects;
 
-create policy "public_can_view_coin_images"
+create policy "users_select_own_coin_images"
 on storage.objects
 for select
-using (bucket_id = 'coin-images');
+using (
+  bucket_id = 'coin-images'
+  and auth.uid()::text = (storage.foldername(name))[1]
+);
 
 create policy "users_upload_own_coin_images"
 on storage.objects

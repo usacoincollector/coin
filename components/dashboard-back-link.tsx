@@ -9,7 +9,7 @@ export function DashboardBackLink() {
   if (pathname === '/dashboard/coins/new') {
     return (
       <Link className="text-sm text-gray-600 hover:text-gray-900" href="/dashboard">
-        Cancel
+        ← Back to dashboard
       </Link>
     );
   }

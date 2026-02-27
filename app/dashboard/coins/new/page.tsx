@@ -7,7 +7,7 @@ export default function NewCoinPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Add Coin</h1>
         <Link className="text-sm" href="/dashboard">
-          ← Back to dashboard
+          Cancel
         </Link>
       </div>
       <CoinForm mode="create" />

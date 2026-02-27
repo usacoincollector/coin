@@ -116,6 +116,10 @@ export function CoinForm({ mode, initialValue, initialImagePreviewUrls = {} }: C
           />
         </div>
         <div className="space-y-1">
+          <label htmlFor="storage">Storage Location</label>
+          <input id="storage" onChange={(e) => setStorageLocation(e.target.value)} required value={storageLocation} />
+        </div>
+        <div className="space-y-1">
           <label htmlFor="estimated">Current Estimated Value (optional)</label>
           <input
             id="estimated"
@@ -126,10 +130,6 @@ export function CoinForm({ mode, initialValue, initialImagePreviewUrls = {} }: C
             value={estimatedValue}
           />
         </div>
-        <div className="space-y-1">
-          <label htmlFor="storage">Storage Location</label>
-          <input id="storage" onChange={(e) => setStorageLocation(e.target.value)} required value={storageLocation} />
-        </div>
       </div>
 
       <div className="space-y-1">
@@ -138,7 +138,7 @@ export function CoinForm({ mode, initialValue, initialImagePreviewUrls = {} }: C
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="images">Images (1-3 total)</label>
+        <label htmlFor="images">Images (Up to 3 total)</label>
         <input
           accept="image/*"
           disabled={!canUploadMore}

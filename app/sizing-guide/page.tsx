@@ -65,26 +65,11 @@ export default function SizingGuidePage() {
             Coin Sizing Guide
           </h1>
           <p className="max-w-2xl text-base text-blue-50 md:text-lg">
-            Quick reference sizes for common US coin types, plus detailed fit notes to help you choose the right flips,
-            holders, and storage supplies.
+            Quick reference sizes for common US coin types, plus detailed size guide for other coins to help you
+            choose the right storage supplies.
           </p>
         </div>
       </header>
-
-      <section className="grid gap-4 md:grid-cols-3">
-        <article className="rounded-xl border border-slate-200 bg-white p-5">
-          <h2 className="text-lg font-semibold text-slate-900">Fast Lookup</h2>
-          <p className="mt-2 text-sm text-slate-600">Find the standard diameter in both millimeters and inches at a glance.</p>
-        </article>
-        <article className="rounded-xl border border-slate-200 bg-white p-5">
-          <h2 className="text-lg font-semibold text-slate-900">Collector Focused</h2>
-          <p className="mt-2 text-sm text-slate-600">Examples include classic US types collectors actually sort, store, and protect.</p>
-        </article>
-        <article className="rounded-xl border border-slate-200 bg-white p-5">
-          <h2 className="text-lg font-semibold text-slate-900">Practical Sizing</h2>
-          <p className="mt-2 text-sm text-slate-600">Use this page when choosing flips, capsules, and supplies for common coin sizes.</p>
-        </article>
-      </section>
 
       <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         <div className="border-b border-slate-200 bg-slate-50 px-5 py-4">

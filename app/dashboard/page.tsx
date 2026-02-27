@@ -125,7 +125,11 @@ export default async function DashboardPage() {
                 <dd>{coin.storage_location}</dd>
               </div>
             </dl>
-            {coin.notes && <p className="mt-3 text-sm text-gray-700">{coin.notes}</p>}
+            {coin.notes && (
+              <p className="mt-3 text-sm text-gray-700">
+                <span className="font-semibold">Notes:</span> {coin.notes}
+              </p>
+            )}
 
             {coin.image_urls?.length > 0 && (
               <div className="mt-3 grid grid-cols-3 gap-2">

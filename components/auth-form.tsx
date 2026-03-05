@@ -18,7 +18,7 @@ export function AuthForm({ mode, emailVerified = false, passwordReset = false }:
   const [loading, setLoading] = useState(false);
   const [notice, setNotice] = useState(
     emailVerified
-      ? 'Email address verified successfully. You can log in now.'
+      ? 'Email address verified successfully!'
       : passwordReset
         ? 'Password reset successfully. Log in with your new password.'
         : ''

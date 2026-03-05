@@ -133,8 +133,10 @@ export function CoinForm({ mode, initialValue, initialImagePreviewUrls = {} }: C
           <input id="name" onChange={(e) => setName(e.target.value)} required value={name} />
         </div>
         <div className="space-y-1">
-          <label htmlFor="year">Year *</label>
           <div className="flex items-center gap-2">
+            <label className="whitespace-nowrap" htmlFor="year">
+              Year *
+            </label>
             <input
               id="year"
               inputMode="numeric"

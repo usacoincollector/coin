@@ -9,7 +9,7 @@ const lato = Lato({
 });
 
 export const metadata: Metadata = {
-  title: 'Coin Shield Digital Vault',
+  title: 'USA Coin Collector',
   description: 'Track your coin collection securely.'
 };
 

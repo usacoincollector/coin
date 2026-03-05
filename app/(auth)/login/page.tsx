@@ -3,7 +3,11 @@ import Link from 'next/link';
 import { AuthForm } from '@/components/auth-form';
 import { createServerClient } from '@/lib/supabase-server';
 
-export default async function LoginPage() {
+type LoginPageProps = {
+  searchParams?: { emailVerified?: string; passwordReset?: string };
+};
+
+export default async function LoginPage({ searchParams }: LoginPageProps) {
   const supabase = createServerClient();
   const {
     data: { user }
@@ -18,7 +22,11 @@ export default async function LoginPage() {
       <Link className="text-sm text-gray-600 hover:text-gray-900" href="/">
         ← Back to homepage
       </Link>
-      <AuthForm mode="login" />
+      <AuthForm
+        emailVerified={searchParams?.emailVerified === '1'}
+        mode="login"
+        passwordReset={searchParams?.passwordReset === '1'}
+      />
     </section>
   );
 }

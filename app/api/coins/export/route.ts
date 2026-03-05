@@ -1,13 +1,25 @@
 ﻿import { NextResponse } from 'next/server';
+import { headers } from 'next/headers';
 import Papa from 'papaparse';
 import { createRouteClient } from '@/lib/supabase-route';
 
-function toDateOnly(value: string | null) {
+function toDateOnly(value: string | null, timeZone: string) {
   if (!value) return '';
-  return value.split('T')[0] || '';
+
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return '';
+
+  return new Intl.DateTimeFormat('en-US', {
+    timeZone,
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric'
+  }).format(parsed);
 }
 
 export async function GET() {
+  const requestHeaders = headers();
+  const timeZone = requestHeaders.get('x-vercel-ip-timezone') || requestHeaders.get('x-time-zone') || 'America/New_York';
   const supabase = createRouteClient();
   const {
     data: { user }
@@ -35,8 +47,8 @@ export async function GET() {
     estimated_value: coin.estimated_value,
     storage_location: coin.storage_location,
     notes: coin.notes,
-    Created_On: toDateOnly(coin.created_at),
-    Updated_On: toDateOnly(coin.updated_at)
+    Created_On: toDateOnly(coin.created_at, timeZone),
+    Updated_On: toDateOnly(coin.updated_at, timeZone)
   }));
 
   const csv = Papa.unparse(exportRows);

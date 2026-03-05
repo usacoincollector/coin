@@ -24,13 +24,50 @@ export function CoinForm({ mode, initialValue, initialImagePreviewUrls = {} }: C
   const [imagePaths, setImagePaths] = useState<string[]>(initialValue?.image_urls || []);
   const [imagePreviewUrls, setImagePreviewUrls] = useState<Record<string, string>>(initialImagePreviewUrls);
   const [files, setFiles] = useState<File[]>([]);
+  const [yearError, setYearError] = useState('');
 
   const canUploadMore = useMemo(() => imagePaths.length + files.length < 3, [imagePaths.length, files.length]);
+  const validateYear = (value: string) => /^\d{4}$/.test(value) && Number(value) >= 1000 && Number(value) <= 3000;
+
+  const onYearChange = (nextValue: string) => {
+    const yearDigitsOnly = nextValue.replace(/\D/g, '').slice(0, 4);
+    setYear(yearDigitsOnly);
+    if (yearError && validateYear(yearDigitsOnly)) {
+      setYearError('');
+    }
+  };
+
+  const onYearBlur = () => {
+    if (!validateYear(year)) {
+      setYearError('Please enter year in YYYY format.');
+      return;
+    }
+    setYearError('');
+  };
+
+  const onFilesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(event.target.files || []);
+    const availableSlots = 3 - imagePaths.length - files.length;
+    if (availableSlots <= 0 || selectedFiles.length === 0) {
+      event.target.value = '';
+      return;
+    }
+
+    setFiles((currentFiles) => [...currentFiles, ...selectedFiles.slice(0, availableSlots)]);
+    event.target.value = '';
+  };
 
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
     setError('');
+
+    if (!validateYear(year)) {
+      setYearError('Please enter year in YYYY format.');
+      setError('Please enter a valid year in YYYY format.');
+      setLoading(false);
+      return;
+    }
 
     try {
       let mergedImagePaths = [...imagePaths];
@@ -92,19 +129,33 @@ export function CoinForm({ mode, initialValue, initialImagePreviewUrls = {} }: C
     <form className="space-y-4 rounded-lg border border-line bg-white p-4" onSubmit={submit}>
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-1">
-          <label htmlFor="name">Coin Name</label>
+          <label htmlFor="name">Coin Name *</label>
           <input id="name" onChange={(e) => setName(e.target.value)} required value={name} />
         </div>
         <div className="space-y-1">
-          <label htmlFor="year">Year</label>
-          <input id="year" onChange={(e) => setYear(e.target.value)} required type="number" value={year} />
+          <label htmlFor="year">Year *</label>
+          <div className="flex items-center gap-2">
+            <input
+              id="year"
+              inputMode="numeric"
+              maxLength={4}
+              onBlur={onYearBlur}
+              onChange={(e) => onYearChange(e.target.value)}
+              pattern="\d{4}"
+              required
+              type="text"
+              value={year}
+            />
+            <span className="text-xs italic text-gray-500">YYYY</span>
+          </div>
+          {yearError && <p className="text-sm text-red-600">{yearError}</p>}
         </div>
         <div className="space-y-1">
           <label htmlFor="mint">Mint Mark (optional)</label>
           <input id="mint" onChange={(e) => setMintMark(e.target.value)} value={mintMark} />
         </div>
         <div className="space-y-1">
-          <label htmlFor="purchase">Purchase Price</label>
+          <label htmlFor="purchase">Purchase Price *</label>
           <input
             id="purchase"
             min="0"
@@ -116,7 +167,7 @@ export function CoinForm({ mode, initialValue, initialImagePreviewUrls = {} }: C
           />
         </div>
         <div className="space-y-1">
-          <label htmlFor="storage">Storage Location</label>
+          <label htmlFor="storage">Storage Location *</label>
           <input id="storage" onChange={(e) => setStorageLocation(e.target.value)} required value={storageLocation} />
         </div>
         <div className="space-y-1">
@@ -133,7 +184,7 @@ export function CoinForm({ mode, initialValue, initialImagePreviewUrls = {} }: C
       </div>
 
       <div className="space-y-1">
-        <label htmlFor="notes">Notes</label>
+        <label htmlFor="notes">Notes (optional)</label>
         <textarea id="notes" onChange={(e) => setNotes(e.target.value)} rows={4} value={notes} />
       </div>
 
@@ -144,9 +195,25 @@ export function CoinForm({ mode, initialValue, initialImagePreviewUrls = {} }: C
           disabled={!canUploadMore}
           id="images"
           multiple
-          onChange={(e) => setFiles(Array.from(e.target.files || []).slice(0, 3 - imagePaths.length))}
+          onChange={onFilesChange}
           type="file"
         />
+        {files.length > 0 && (
+          <div className="space-y-1 rounded-md border border-line bg-gray-50 p-2">
+            {files.map((file, index) => (
+              <div className="flex items-center justify-between gap-2 text-sm" key={`${file.name}-${file.lastModified}-${index}`}>
+                <span className="truncate">{file.name}</span>
+                <button
+                  className="border-0 bg-transparent px-1 py-0 text-sm text-red-600"
+                  onClick={() => setFiles((curr) => curr.filter((_, fileIndex) => fileIndex !== index))}
+                  type="button"
+                >
+                  x
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
         {imagePaths.length > 0 && (
           <div className="grid grid-cols-3 gap-2">
             {imagePaths.map((path) => (

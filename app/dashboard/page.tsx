@@ -87,7 +87,11 @@ export default async function DashboardPage() {
               </div>
               <div className="flex justify-between gap-2">
                 <dt className="text-gray-600">Estimated</dt>
-                <dd>{coin.estimated_value ? formatCurrency(Number(coin.estimated_value)) : '-'}</dd>
+                <dd>
+                  {coin.estimated_value === null || coin.estimated_value === undefined
+                    ? '-'
+                    : formatCurrency(Number(coin.estimated_value))}
+                </dd>
               </div>
               <div className="flex justify-between gap-2">
                 <dt className="text-gray-600">Storage</dt>

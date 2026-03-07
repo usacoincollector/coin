@@ -27,7 +27,10 @@ export default async function EditCoinPage({ params }: { params: { id: string } 
           year: coin.year,
           mint_mark: coin.mint_mark || '',
           purchase_price: Number(coin.purchase_price),
-          estimated_value: coin.estimated_value ? Number(coin.estimated_value) : undefined,
+          estimated_value:
+            coin.estimated_value === null || coin.estimated_value === undefined
+              ? undefined
+              : Number(coin.estimated_value),
           storage_location: coin.storage_location,
           notes: coin.notes || '',
           image_urls: coin.image_urls || []

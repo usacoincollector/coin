@@ -1,17 +1,8 @@
 ﻿import { NextResponse } from 'next/server';
-import { z } from 'zod';
 import { createRouteClient } from '@/lib/supabase-route';
+import { coinInputSchema } from '@/lib/validation';
 
-const coinSchema = z.object({
-  name: z.string().trim().min(1).max(120),
-  year: z.number().int().min(1000).max(3000),
-  mint_mark: z.string().trim().max(24).optional().or(z.literal('')),
-  purchase_price: z.number().nonnegative(),
-  estimated_value: z.number().nonnegative().optional().nullable(),
-  storage_location: z.string().trim().min(1).max(120),
-  notes: z.string().trim().max(5000).optional().or(z.literal('')),
-  image_urls: z.array(z.string().url()).min(0).max(3)
-});
+const coinSchema = coinInputSchema;
 
 export async function PATCH(request: Request, { params }: { params: { id: string } }) {
   const supabase = createRouteClient();

@@ -12,6 +12,23 @@ type CoinFormProps = {
 export function CoinForm({ mode, initialValue }: CoinFormProps) {
   const router = useRouter();
   const formatMoney = (value: number | null | undefined) => (typeof value === 'number' ? value.toFixed(2) : '');
+  const isMoneyInput = (value: string) => /^\d*(\.\d{0,2})?$/.test(value);
+  const cleanMoneyInput = (value: string) => {
+    const digitsAndDots = value.replace(/[^\d.]/g, '');
+    const firstDotIndex = digitsAndDots.indexOf('.');
+    if (firstDotIndex === -1) {
+      return digitsAndDots;
+    }
+    return `${digitsAndDots.slice(0, firstDotIndex + 1)}${digitsAndDots
+      .slice(firstDotIndex + 1)
+      .replace(/\./g, '')}`;
+  };
+  const updateMoney = (value: string, setter: (next: string) => void) => {
+    const cleaned = cleanMoneyInput(value);
+    if (isMoneyInput(cleaned)) {
+      setter(cleaned);
+    }
+  };
   const normalizeMoney = (value: string) => {
     if (!value.trim()) return '';
     const parsed = Number(value);
@@ -121,16 +138,14 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
           <div className="relative">
             <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">$</span>
             <input
-              className="pl-7"
+              className="pl-8"
               id="purchase"
               inputMode="decimal"
-              min="0"
               onBlur={(e) => setPurchasePrice(normalizeMoney(e.target.value))}
-              onChange={(e) => setPurchasePrice(e.target.value)}
+              onChange={(e) => updateMoney(e.target.value, setPurchasePrice)}
               placeholder="0.00"
               required
-              step="0.01"
-              type="number"
+              type="text"
               value={purchasePrice}
             />
           </div>
@@ -146,15 +161,13 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
           <div className="relative">
             <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">$</span>
             <input
-              className="pl-7"
+              className="pl-8"
               id="estimated"
               inputMode="decimal"
-              min="0"
               onBlur={(e) => setEstimatedValue(normalizeMoney(e.target.value))}
-              onChange={(e) => setEstimatedValue(e.target.value)}
+              onChange={(e) => updateMoney(e.target.value, setEstimatedValue)}
               placeholder="0.00"
-              step="0.01"
-              type="number"
+              type="text"
               value={estimatedValue}
             />
           </div>

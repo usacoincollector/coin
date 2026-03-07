@@ -11,13 +11,20 @@ type CoinFormProps = {
 
 export function CoinForm({ mode, initialValue }: CoinFormProps) {
   const router = useRouter();
+  const formatMoney = (value: number | null | undefined) => (typeof value === 'number' ? value.toFixed(2) : '');
+  const normalizeMoney = (value: string) => {
+    if (!value.trim()) return '';
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed.toFixed(2) : '';
+  };
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [name, setName] = useState(initialValue?.name || '');
   const [year, setYear] = useState(initialValue?.year?.toString() || '');
   const [mintMark, setMintMark] = useState(initialValue?.mint_mark || '');
-  const [purchasePrice, setPurchasePrice] = useState(initialValue?.purchase_price?.toString() || '');
-  const [estimatedValue, setEstimatedValue] = useState(initialValue?.estimated_value?.toString() || '');
+  const [purchasePrice, setPurchasePrice] = useState(formatMoney(initialValue?.purchase_price));
+  const [estimatedValue, setEstimatedValue] = useState(formatMoney(initialValue?.estimated_value));
   const [storageLocation, setStorageLocation] = useState(initialValue?.storage_location || '');
   const [notes, setNotes] = useState(initialValue?.notes || '');
   const [imageUrls, setImageUrls] = useState<string[]>(initialValue?.image_urls || []);
@@ -90,42 +97,72 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
     <form className="space-y-4 rounded-lg border border-line bg-white p-4" onSubmit={submit}>
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-1">
-          <label htmlFor="name">Coin Name</label>
+          <label className="flex min-h-10 items-end" htmlFor="name">
+            Coin Name
+          </label>
           <input id="name" onChange={(e) => setName(e.target.value)} required value={name} />
         </div>
         <div className="space-y-1">
-          <label htmlFor="year">Year</label>
+          <label className="flex min-h-10 items-end" htmlFor="year">
+            Year
+          </label>
           <input id="year" onChange={(e) => setYear(e.target.value)} required type="number" value={year} />
         </div>
         <div className="space-y-1">
-          <label htmlFor="mint">Mint Mark (optional)</label>
+          <label className="flex min-h-10 items-end" htmlFor="mint">
+            Mint Mark (optional)
+          </label>
           <input id="mint" onChange={(e) => setMintMark(e.target.value)} value={mintMark} />
         </div>
         <div className="space-y-1">
-          <label htmlFor="purchase">Purchase Price</label>
-          <input
-            id="purchase"
-            min="0"
-            onChange={(e) => setPurchasePrice(e.target.value)}
-            required
-            step="0.01"
-            type="number"
-            value={purchasePrice}
-          />
+          <label className="flex min-h-10 items-end" htmlFor="purchase">
+            Purchase Price
+          </label>
+          <div className="relative">
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">$</span>
+            <input
+              className="pl-7"
+              id="purchase"
+              inputMode="decimal"
+              min="0"
+              onBlur={(e) => setPurchasePrice(normalizeMoney(e.target.value))}
+              onChange={(e) => setPurchasePrice(e.target.value)}
+              placeholder="0.00"
+              required
+              step="0.01"
+              type="number"
+              value={purchasePrice}
+            />
+          </div>
         </div>
         <div className="space-y-1">
-          <label htmlFor="estimated">Current Estimated Value (optional)</label>
-          <input
-            id="estimated"
-            min="0"
-            onChange={(e) => setEstimatedValue(e.target.value)}
-            step="0.01"
-            type="number"
-            value={estimatedValue}
-          />
+          <label className="flex min-h-10 items-end" htmlFor="estimated">
+            <span>
+              Current Estimated Value
+              <br />
+              (optional)
+            </span>
+          </label>
+          <div className="relative">
+            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">$</span>
+            <input
+              className="pl-7"
+              id="estimated"
+              inputMode="decimal"
+              min="0"
+              onBlur={(e) => setEstimatedValue(normalizeMoney(e.target.value))}
+              onChange={(e) => setEstimatedValue(e.target.value)}
+              placeholder="0.00"
+              step="0.01"
+              type="number"
+              value={estimatedValue}
+            />
+          </div>
         </div>
         <div className="space-y-1">
-          <label htmlFor="storage">Storage Location</label>
+          <label className="flex min-h-10 items-end" htmlFor="storage">
+            Storage Location
+          </label>
           <input id="storage" onChange={(e) => setStorageLocation(e.target.value)} required value={storageLocation} />
         </div>
       </div>

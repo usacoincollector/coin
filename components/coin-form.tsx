@@ -34,9 +34,16 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
     const parsed = Number(value);
     return Number.isFinite(parsed) ? parsed.toFixed(2) : '';
   };
+  const isValidYearFormat = (value: string) => /^\d{4}$/.test(value);
+  const getImageName = (url: string) => {
+    const withoutQuery = url.split('?')[0] || url;
+    const lastSegment = withoutQuery.split('/').pop() || url;
+    return decodeURIComponent(lastSegment);
+  };
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [yearError, setYearError] = useState('');
   const [name, setName] = useState(initialValue?.name || '');
   const [year, setYear] = useState(initialValue?.year?.toString() || '');
   const [mintMark, setMintMark] = useState(initialValue?.mint_mark || '');
@@ -53,6 +60,13 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
     event.preventDefault();
     setLoading(true);
     setError('');
+    setYearError('');
+
+    if (!isValidYearFormat(year)) {
+      setYearError('Year must be exactly 4 digits.');
+      setLoading(false);
+      return;
+    }
 
     try {
       let mergedImageUrls = [...imageUrls];
@@ -123,7 +137,24 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
           <label className="flex min-h-10 items-end" htmlFor="year">
             Year
           </label>
-          <input id="year" onChange={(e) => setYear(e.target.value)} required type="number" value={year} />
+          <input
+            id="year"
+            inputMode="numeric"
+            maxLength={4}
+            onBlur={() => setYearError(isValidYearFormat(year) ? '' : 'Year must be exactly 4 digits.')}
+            onChange={(e) => {
+              const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 4);
+              setYear(digitsOnly);
+              if (yearError) {
+                setYearError(isValidYearFormat(digitsOnly) ? '' : 'Year must be exactly 4 digits.');
+              }
+            }}
+            pattern="\d{4}"
+            required
+            type="text"
+            value={year}
+          />
+          {yearError && <p className="text-sm text-red-600">{yearError}</p>}
         </div>
         <div className="space-y-1">
           <label className="flex min-h-10 items-end" htmlFor="mint">
@@ -186,30 +217,51 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="images">Images (1-3 total)</label>
+        <label htmlFor="images">Images (up to 3 total)</label>
         <input
           accept="image/*"
           disabled={!canUploadMore}
           id="images"
           multiple
-          onChange={(e) => setFiles(Array.from(e.target.files || []).slice(0, 3 - imageUrls.length))}
+          onChange={(e) => {
+            const incoming = Array.from(e.target.files || []);
+            setFiles((curr) => [...curr, ...incoming].slice(0, 3 - imageUrls.length));
+            e.currentTarget.value = '';
+          }}
           type="file"
         />
-        {imageUrls.length > 0 && (
-          <div className="grid grid-cols-3 gap-2">
+        {(imageUrls.length > 0 || files.length > 0) && (
+          <ul className="space-y-1">
             {imageUrls.map((url) => (
-              <div className="relative" key={url}>
-                <img alt="Coin" className="h-20 w-full rounded-md object-cover" src={url} />
+              <li className="flex items-center justify-between rounded-md border border-line px-3 py-2 text-sm" key={url}>
+                <span className="truncate">{getImageName(url)}</span>
                 <button
-                  className="absolute right-1 top-1 border-0 bg-white px-1 py-0 text-xs"
+                  aria-label={`Remove ${getImageName(url)}`}
+                  className="border-0 bg-transparent px-1 py-0 text-base leading-none text-red-600"
                   onClick={() => setImageUrls((curr) => curr.filter((u) => u !== url))}
                   type="button"
                 >
-                  Remove
+                  x
                 </button>
-              </div>
+              </li>
             ))}
-          </div>
+            {files.map((file, index) => (
+              <li
+                className="flex items-center justify-between rounded-md border border-line px-3 py-2 text-sm"
+                key={`${file.name}-${file.size}-${file.lastModified}`}
+              >
+                <span className="truncate">{file.name}</span>
+                <button
+                  aria-label={`Remove ${file.name}`}
+                  className="border-0 bg-transparent px-1 py-0 text-base leading-none text-red-600"
+                  onClick={() => setFiles((curr) => curr.filter((_, i) => i !== index))}
+                  type="button"
+                >
+                  x
+                </button>
+              </li>
+            ))}
+          </ul>
         )}
       </div>
 

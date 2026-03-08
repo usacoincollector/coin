@@ -1,6 +1,47 @@
+'use client';
+
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function ContactUsPage() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+    setError('');
+    setSuccess('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message })
+      });
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw new Error(json.error || 'Unable to send message right now.');
+      }
+
+      setSuccess('Message sent successfully. We will get back to you soon.');
+      setName('');
+      setEmail('');
+      setMessage('');
+    } catch (err) {
+      const messageText = err instanceof Error ? err.message : 'Unable to send message right now.';
+      setError(messageText);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section className="space-y-6 [font-family:'Trebuchet_MS','Lucida_Sans_Unicode','Lucida_Grande','Verdana',sans-serif]">
       <div className="flex items-center justify-between gap-3">
@@ -21,30 +62,56 @@ export default function ContactUsPage() {
         </p>
       </article>
 
-      <form
-        action="mailto:usacoincollector.ebay@gmail.com"
-        className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6"
-        encType="text/plain"
-        method="post"
-      >
+      <form className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6" onSubmit={onSubmit}>
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-1">
             <label htmlFor="name">Name</label>
-            <input id="name" name="Name" required type="text" />
+            <input
+              autoComplete="name"
+              id="name"
+              name="name"
+              onChange={(e) => setName(e.target.value)}
+              required
+              type="text"
+              value={name}
+            />
           </div>
           <div className="space-y-1">
             <label htmlFor="email">Email</label>
-            <input id="email" name="Email" required type="email" />
+            <input
+              autoComplete="email"
+              id="email"
+              name="email"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              type="email"
+              value={email}
+            />
           </div>
         </div>
 
         <div className="space-y-1">
           <label htmlFor="message">Message</label>
-          <textarea className="w-full" id="message" name="Message" required rows={7} />
+          <textarea
+            className="w-full"
+            id="message"
+            name="message"
+            onChange={(e) => setMessage(e.target.value)}
+            required
+            rows={7}
+            value={message}
+          />
         </div>
 
-        <button className="bg-[#102a63] px-5 py-3 text-sm font-semibold text-white hover:bg-[#1a3d86]" type="submit">
-          Send Message
+        {error && <p className="text-sm text-red-600">{error}</p>}
+        {success && <p className="text-sm text-green-700">{success}</p>}
+
+        <button
+          className="bg-[#102a63] px-5 py-3 text-sm font-semibold text-white hover:bg-[#1a3d86]"
+          disabled={loading}
+          type="submit"
+        >
+          {loading ? 'Sending...' : 'Send Message'}
         </button>
       </form>
     </section>

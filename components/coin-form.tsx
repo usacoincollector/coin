@@ -1,6 +1,7 @@
 ﻿'use client';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { coinInputSchema, type CoinInput } from '@/lib/validation';
 
@@ -267,9 +268,16 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
 
       {error && <p className="text-sm text-red-600">{error}</p>}
 
-      <button className="bg-accent font-medium text-white" disabled={loading} type="submit">
-        {loading ? 'Saving...' : mode === 'create' ? 'Add Coin' : 'Save Changes'}
-      </button>
+      <div className="flex items-center gap-4">
+        <button className="bg-accent font-medium text-white" disabled={loading} type="submit">
+          {loading ? 'Saving...' : mode === 'create' ? 'Add Coin' : 'Save Changes'}
+        </button>
+        {mode === 'create' && (
+          <Link className="text-sm text-gray-700 hover:text-gray-900" href="/dashboard">
+            Cancel
+          </Link>
+        )}
+      </div>
     </form>
   );
 }

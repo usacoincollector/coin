@@ -13,6 +13,8 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
   const [showVerifyPopup, setShowVerifyPopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const duplicateEmailError =
+    'This email address already has an account, please use the Forgot password link to reset your password.';
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -35,12 +37,25 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
           });
 
     if (authError) {
-      setError(authError.message);
+      if (mode === 'signup' && authError.message.toLowerCase().includes('already')) {
+        setError(duplicateEmailError);
+      } else {
+        setError(authError.message);
+      }
       setLoading(false);
       return;
     }
 
     if (mode === 'signup' && !data.session) {
+      // Supabase can return a user without identities for already-registered emails.
+      const existingUserSignup = data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0;
+
+      if (existingUserSignup) {
+        setError(duplicateEmailError);
+        setLoading(false);
+        return;
+      }
+
       setMessage('Check your email for the verification link, then return to log in.');
       setShowVerifyPopup(true);
       setLoading(false);
@@ -91,6 +106,10 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
           Need an account?{' '}
           <Link className="underline" href="/signup">
             Sign up
+          </Link>
+          {' · '}
+          <Link className="underline" href="/forgot-password">
+            Forgot password?
           </Link>
         </p>
       ) : (

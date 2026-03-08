@@ -9,6 +9,8 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+  const [showVerifyPopup, setShowVerifyPopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -16,16 +18,31 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
     event.preventDefault();
     setLoading(true);
     setError('');
+    setMessage('');
+    setShowVerifyPopup(false);
 
     const supabase = createBrowserClient();
 
-    const { error: authError } =
+    const { data, error: authError } =
       mode === 'login'
         ? await supabase.auth.signInWithPassword({ email, password })
-        : await supabase.auth.signUp({ email, password });
+        : await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+              emailRedirectTo: `${window.location.origin}/login?verified=1`
+            }
+          });
 
     if (authError) {
       setError(authError.message);
+      setLoading(false);
+      return;
+    }
+
+    if (mode === 'signup' && !data.session) {
+      setMessage('Check your email for the verification link, then return to log in.');
+      setShowVerifyPopup(true);
       setLoading(false);
       return;
     }
@@ -63,7 +80,7 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
         </div>
 
         {error && <p className="text-sm text-red-600">{error}</p>}
-
+        {message && <p className="text-sm text-green-700">{message}</p>}
         <button className="w-full bg-accent font-medium text-white" disabled={loading} type="submit">
           {loading ? 'Please wait...' : mode === 'login' ? 'Log in' : 'Create account'}
         </button>
@@ -83,6 +100,30 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
             Log in
           </Link>
         </p>
+      )}
+
+      {mode === 'signup' && showVerifyPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="w-full max-w-md rounded-lg border border-line bg-white p-5 shadow-xl">
+            <h2 className="text-lg font-semibold text-gray-900">Verify Your Email</h2>
+            <p className="mt-2 text-sm text-gray-700">
+              We sent a verification email to <span className="font-semibold">{email}</span>. Please click the link in
+              that email to activate your account.
+            </p>
+            <div className="mt-4 flex gap-2">
+              <button
+                className="w-full border border-line bg-white font-medium text-gray-800 hover:bg-gray-50"
+                onClick={() => setShowVerifyPopup(false)}
+                type="button"
+              >
+                Close
+              </button>
+              <Link className="w-full bg-accent px-3 py-2 text-center font-medium text-white" href="/login">
+                Go to Login
+              </Link>
+            </div>
+          </div>
+        </div>
       )}
     </section>
   );

@@ -59,6 +59,24 @@ export default function HomePage() {
             >
               Open Digital Vault
             </Link>
+            <Link
+              className="rounded-md border border-white/50 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
+              href="/sizing-guide"
+            >
+              Sizing Guide
+            </Link>
+            <Link
+              className="rounded-md border border-white/50 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
+              href="/about-us"
+            >
+              About Us
+            </Link>
+            <Link
+              className="rounded-md border border-white/50 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
+              href="/contact-us"
+            >
+              Contact Us
+            </Link>
           </div>
         </div>
       </section>

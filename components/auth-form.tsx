@@ -50,20 +50,14 @@ export function AuthForm({ mode, emailVerified = false, passwordReset = false }:
         });
 
         const existsJson = await existsResponse.json();
-        if (!existsResponse.ok) {
-          throw new Error(existsJson.error || 'Unable to validate email right now.');
-        }
-
-        if (existsJson.exists) {
+        if (existsResponse.ok && existsJson.exists) {
           setError(duplicateEmailError);
           setLoading(false);
           return;
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Unable to validate email right now.';
-        setError(message);
-        setLoading(false);
-        return;
+        // If server-side email precheck is unavailable, continue with normal signup flow.
+        console.log('Email precheck unavailable, continuing signup flow.', err);
       }
     }
 

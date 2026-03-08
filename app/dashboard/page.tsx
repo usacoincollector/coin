@@ -26,6 +26,7 @@ export default async function DashboardPage() {
 
   const totalCoins = coins.length;
   const totalPurchaseValue = coins.reduce((sum, coin) => sum + Number(coin.purchase_price || 0), 0);
+  const totalEstimatedValue = coins.reduce((sum, coin) => sum + Number(coin.estimated_value || 0), 0);
 
   return (
     <section className="space-y-6">
@@ -45,7 +46,7 @@ export default async function DashboardPage() {
         </div>
       </header>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-3">
         <article className="rounded-lg border border-line bg-surface p-4">
           <p className="text-sm text-gray-600">Total Coins</p>
           <p className="text-2xl font-semibold">{totalCoins}</p>
@@ -53,6 +54,10 @@ export default async function DashboardPage() {
         <article className="rounded-lg border border-line bg-surface p-4">
           <p className="text-sm text-gray-600">Total Purchase Value</p>
           <p className="text-2xl font-semibold">{formatCurrency(totalPurchaseValue)}</p>
+        </article>
+        <article className="rounded-lg border border-line bg-surface p-4">
+          <p className="text-sm text-gray-600">Total Estimated Value</p>
+          <p className="text-2xl font-semibold">{formatCurrency(totalEstimatedValue)}</p>
         </article>
       </div>
 

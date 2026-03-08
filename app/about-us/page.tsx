@@ -25,9 +25,6 @@ export default function AboutUsPage() {
         <Link className="text-sm text-slate-700 hover:text-slate-900" href="/">
           {'<- Back to homepage'}
         </Link>
-        <Link className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50" href="/contact-us">
-          Contact Us
-        </Link>
       </div>
 
       <article className="rounded-2xl border border-slate-200 bg-gradient-to-r from-white to-[#fff7db] p-8">
@@ -94,7 +91,6 @@ export default function AboutUsPage() {
       </div>
 
       <article className="rounded-2xl border border-[#f0e2b3] bg-[#fff9e5] p-6">
-        <p className="text-xs font-semibold tracking-[0.2em] text-[#8a6b00]">COIN SHIELD PROMISE</p>
         <h2 className="mt-2 text-5xl text-[#102a63] [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
           Top US Brand for Coin Flips &amp; Storage
         </h2>

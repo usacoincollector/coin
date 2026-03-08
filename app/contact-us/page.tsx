@@ -7,9 +7,6 @@ export default function ContactUsPage() {
         <Link className="text-sm text-slate-700 hover:text-slate-900" href="/">
           {'<- Back to homepage'}
         </Link>
-        <Link className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50" href="/about-us">
-          About Us
-        </Link>
       </div>
 
       <article className="rounded-2xl border border-blue-900/20 bg-gradient-to-br from-[#12377a] via-[#17539d] to-[#2e92d6] p-8 text-white">
@@ -48,20 +45,12 @@ export default function ContactUsPage() {
 
         <div className="space-y-1">
           <label htmlFor="message">Message</label>
-          <textarea id="message" name="Message" required rows={7} />
+          <textarea className="w-full" id="message" name="Message" required rows={7} />
         </div>
 
         <button className="bg-[#102a63] px-5 py-3 text-sm font-semibold text-white hover:bg-[#1a3d86]" type="submit">
           Send Message
         </button>
-
-        <p className="text-sm text-slate-600">
-          This opens your email app and sends the message to{' '}
-          <a className="font-semibold text-[#102a63] hover:underline" href="mailto:usacoincollector.ebay@gmail.com">
-            usacoincollector.ebay@gmail.com
-          </a>
-          .
-        </p>
       </form>
     </section>
   );

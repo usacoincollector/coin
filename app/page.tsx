@@ -38,7 +38,7 @@ export default function HomePage() {
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
             <a
-              className="rounded-md bg-red-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-500"
+              className="rounded-md border border-white/50 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
               href="https://www.ebay.com/str/usacoincollector"
               rel="noreferrer"
               target="_blank"
@@ -116,9 +116,6 @@ export default function HomePage() {
               Coin Shield Essentials
             </h2>
           </div>
-          <Link className="rounded-md bg-[#0f1f57] px-4 py-2 text-sm font-semibold text-white" href="/digitalvault">
-            Sign In to Digital Vault
-          </Link>
         </div>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           {categories.map((category) => (

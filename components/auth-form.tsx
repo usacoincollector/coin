@@ -25,6 +25,32 @@ export function AuthForm({ mode }: { mode: 'login' | 'signup' }) {
 
     const supabase = createBrowserClient();
 
+    if (mode === 'signup') {
+      try {
+        const existsResponse = await fetch('/api/auth/check-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+
+        const existsJson = await existsResponse.json();
+        if (!existsResponse.ok) {
+          throw new Error(existsJson.error || 'Unable to validate email right now.');
+        }
+
+        if (existsJson.exists) {
+          setError(duplicateEmailError);
+          setLoading(false);
+          return;
+        }
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Unable to validate email right now.';
+        setError(message);
+        setLoading(false);
+        return;
+      }
+    }
+
     const { data, error: authError } =
       mode === 'login'
         ? await supabase.auth.signInWithPassword({ email, password })

@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     }
 
     const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
-    const contactTo = process.env.CONTACT_TO_EMAIL || 'usacoincollector.ebay@gmail.com';
+    const contactTo = process.env.CONTACT_TO_EMAIL || 'usacoincollector.amazon@gmail.com';
 
     if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
       return NextResponse.json(

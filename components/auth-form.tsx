@@ -110,6 +110,7 @@ export function AuthForm({ mode, emailVerified = false, passwordReset = false }:
           <label htmlFor="email">Email</label>
           <input
             autoComplete="email"
+            className="ml-4"
             id="email"
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -121,6 +122,7 @@ export function AuthForm({ mode, emailVerified = false, passwordReset = false }:
           <label htmlFor="password">Password</label>
           <input
             autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+            className="ml-4"
             id="password"
             minLength={8}
             onChange={(e) => setPassword(e.target.value)}

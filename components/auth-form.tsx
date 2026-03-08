@@ -106,7 +106,7 @@ export function AuthForm({ mode, emailVerified = false, passwordReset = false }:
     <section className="mx-auto max-w-md space-y-4 rounded-lg border border-line bg-surface p-6">
       <h1 className="text-xl font-semibold">{mode === 'login' ? 'Log in' : 'Create account'}</h1>
       <form className="space-y-4" onSubmit={onSubmit}>
-        <div className="space-y-1">
+        <div className="space-y-2">
           <label htmlFor="email">Email</label>
           <input
             autoComplete="email"
@@ -117,7 +117,7 @@ export function AuthForm({ mode, emailVerified = false, passwordReset = false }:
             value={email}
           />
         </div>
-        <div className="space-y-1">
+        <div className="space-y-2">
           <label htmlFor="password">Password</label>
           <input
             autoComplete={mode === 'login' ? 'current-password' : 'new-password'}

@@ -213,14 +213,19 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
       </div>
 
       <div className="space-y-1">
-        <label htmlFor="notes">Notes</label>
+        <label className="flex min-h-10 items-end" htmlFor="notes">
+          Notes
+        </label>
         <textarea id="notes" onChange={(e) => setNotes(e.target.value)} rows={4} value={notes} />
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="images">Images (up to 3 total)</label>
+        <label className="mr-2" htmlFor="images">
+          Images (up to 3 total)
+        </label>
         <input
           accept="image/*"
+          className="mt-1"
           disabled={!canUploadMore}
           id="images"
           multiple

@@ -5,7 +5,7 @@ import { EmailVerifiedPopup } from '@/components/email-verified-popup';
 import { createServerClient } from '@/lib/supabase-server';
 
 type LoginPageProps = {
-  searchParams?: { emailVerified?: string; passwordReset?: string };
+  searchParams?: { emailVerified?: string; passwordReset?: string; verified?: string; reset?: string };
 };
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
@@ -25,9 +25,9 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         {'<- Back to homepage'}
       </Link>
       <AuthForm
-        emailVerified={searchParams?.emailVerified === '1'}
+        emailVerified={searchParams?.emailVerified === '1' || searchParams?.verified === '1'}
         mode="login"
-        passwordReset={searchParams?.passwordReset === '1'}
+        passwordReset={searchParams?.passwordReset === '1' || searchParams?.reset === '1'}
       />
     </section>
   );

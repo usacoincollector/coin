@@ -1,5 +1,6 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { createServerClient } from '@/lib/supabase-server';
+import { COIN_IMAGE_BUCKET, isAbsoluteUrl, normalizeCoinImageRef } from '@/lib/coin-images';
 import { formatCurrency } from '@/lib/utils';
 import { DeleteCoinButton } from '@/components/delete-coin-button';
 import { LogoutButton } from '@/components/logout-button';
@@ -22,6 +23,31 @@ export default async function DashboardPage() {
 
   if (error) {
     throw new Error(error.message);
+  }
+
+  const imagePathSet = new Set<string>();
+  for (const coin of coins) {
+    for (const imageRef of coin.image_urls || []) {
+      const normalized = normalizeCoinImageRef(imageRef);
+      if (normalized && !isAbsoluteUrl(normalized)) {
+        imagePathSet.add(normalized);
+      }
+    }
+  }
+
+  const imagePathList = Array.from(imagePathSet);
+  const signedImageUrlByPath = new Map<string, string>();
+
+  if (imagePathList.length > 0) {
+    const { data: signedData } = await supabase.storage
+      .from(COIN_IMAGE_BUCKET)
+      .createSignedUrls(imagePathList, 60 * 60 * 24 * 7);
+
+    signedData?.forEach((item, index) => {
+      if (item?.signedUrl) {
+        signedImageUrlByPath.set(imagePathList[index]!, item.signedUrl);
+      }
+    });
   }
 
   const totalCoins = coins.length;
@@ -107,9 +133,16 @@ export default async function DashboardPage() {
 
             {coin.image_urls?.length > 0 && (
               <div className="mt-3 grid grid-cols-3 gap-2">
-                {coin.image_urls.map((url: string) => (
-                  <img alt={coin.name} className="h-20 w-full rounded-md object-cover" key={url} src={url} />
-                ))}
+                {coin.image_urls
+                  .map((imageRef: string) => {
+                    const normalized = normalizeCoinImageRef(imageRef);
+                    if (!normalized) return null;
+                    return isAbsoluteUrl(normalized) ? normalized : signedImageUrlByPath.get(normalized) || null;
+                  })
+                  .filter((url: string | null): url is string => Boolean(url))
+                  .map((url: string) => (
+                    <img alt={coin.name} className="h-20 w-full rounded-md object-cover" key={url} src={url} />
+                  ))}
               </div>
             )}
           </article>

@@ -39,11 +39,6 @@ export default function ContactUsPage() {
         </div>
 
         <div className="space-y-1">
-          <label htmlFor="subject">Subject</label>
-          <input id="subject" name="Subject" required type="text" />
-        </div>
-
-        <div className="space-y-1">
           <label htmlFor="message">Message</label>
           <textarea className="w-full" id="message" name="Message" required rows={7} />
         </div>

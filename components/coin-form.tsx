@@ -129,13 +129,13 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
       <div className="grid gap-4 md:grid-cols-2">
         <div className="space-y-1">
           <label className="flex min-h-10 items-end" htmlFor="name">
-            Coin Name
+            Coin Name *
           </label>
           <input id="name" onChange={(e) => setName(e.target.value)} required value={name} />
         </div>
         <div className="space-y-1">
           <label className="flex min-h-10 items-end" htmlFor="year">
-            Year
+            Year *
           </label>
           <input
             id="year"
@@ -164,7 +164,7 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
         </div>
         <div className="space-y-1">
           <label className="flex min-h-10 items-end" htmlFor="purchase">
-            Purchase Price
+            Purchase Price *
           </label>
           <div className="relative">
             <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-500">$</span>
@@ -205,7 +205,7 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
         </div>
         <div className="space-y-1">
           <label className="flex min-h-10 items-end" htmlFor="storage">
-            Storage Location
+            Storage Location *
           </label>
           <input id="storage" onChange={(e) => setStorageLocation(e.target.value)} required value={storageLocation} />
         </div>

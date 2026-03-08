@@ -26,9 +26,6 @@ export default function HomePage() {
         <div className="pointer-events-none absolute inset-0 opacity-40 [background:radial-gradient(circle_at_15%_15%,rgba(255,255,255,0.38),transparent_28%),radial-gradient(circle_at_85%_20%,rgba(255,255,255,0.22),transparent_30%)]" />
         <div className="pointer-events-none absolute -bottom-16 left-[-10%] h-48 w-[120%] rounded-[100%] border-t-8 border-red-500/90 bg-blue-950/80" />
         <div className="relative z-10 max-w-3xl space-y-5">
-          <p className="inline-block rounded-full border border-white/40 bg-white/10 px-3 py-1 text-xs tracking-[0.2em]">
-            USA Coin Collector
-          </p>
           <p className="text-4xl leading-tight md:text-6xl [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
             USA Coin Collector
           </p>

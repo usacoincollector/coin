@@ -44,7 +44,7 @@ export default function ForgotPasswordPage() {
       <section className="mx-auto max-w-md space-y-4 rounded-lg border border-line bg-surface p-6">
         <h1 className="text-xl font-semibold">Forgot Password</h1>
         <form className="space-y-4" onSubmit={onSubmit}>
-          <div className="space-y-1">
+          <div className="space-y-2">
             <label htmlFor="email">Email</label>
             <input
               autoComplete="email"

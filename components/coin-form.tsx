@@ -83,7 +83,17 @@ export function CoinForm({ mode, initialValue }: CoinFormProps) {
           throw new Error(uploadJson.error || 'Image upload failed.');
         }
 
-        mergedImageUrls = [...mergedImageUrls, ...uploadJson.urls];
+        const returnedUrls = Array.isArray(uploadJson.urls)
+          ? uploadJson.urls
+          : Array.isArray(uploadJson.paths)
+            ? uploadJson.paths
+            : null;
+
+        if (!returnedUrls) {
+          throw new Error('Image upload response is missing uploaded file paths.');
+        }
+
+        mergedImageUrls = [...mergedImageUrls, ...returnedUrls];
       }
 
       const parsed = coinInputSchema.safeParse({

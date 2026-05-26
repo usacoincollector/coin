@@ -16,6 +16,15 @@ create table if not exists public.coins (
   updated_at timestamptz not null default now()
 );
 
+-- Data API permissions for new Supabase grant defaults.
+grant select, insert, update, delete
+on public.coins
+to authenticated;
+
+grant select, insert, update, delete
+on public.coins
+to service_role;
+
 -- Keep updated_at fresh
 create or replace function public.handle_updated_at()
 returns trigger

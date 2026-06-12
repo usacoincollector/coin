@@ -27,13 +27,13 @@ export function SiteFooter() {
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 text-sm text-slate-600 md:px-6">
         <div className="grid gap-8 md:grid-cols-[1.4fr_1fr_1fr]">
           <div className="max-w-md">
-            <Link
-              className="text-2xl text-[#102a63] [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]"
-              href="/"
-            >
+            <Link className="text-lg font-bold tracking-tight text-slate-950" href="/">
               USA Coin Collector
             </Link>
-            <p className="mt-3 leading-6">Premium coin collecting supplies</p>
+            <p className="mt-3 leading-6">
+              Premium supplies for collectors who want reliable storage, clean presentation, and practical collection
+              tools.
+            </p>
           </div>
 
           <nav aria-label="Footer navigation">
@@ -67,7 +67,7 @@ export function SiteFooter() {
 
         <div className="flex flex-col gap-3 border-t border-slate-200 pt-5 md:flex-row md:items-center md:justify-between">
           <p>Copyright &copy; {year} USA Coin Collector. All rights reserved.</p>
-          <p className="text-slate-500">Coin Shield products for collectors, dealers, and hobbyists.</p>
+          <p className="text-slate-500">Products for collectors, dealers, and hobbyists.</p>
         </div>
       </div>
     </footer>

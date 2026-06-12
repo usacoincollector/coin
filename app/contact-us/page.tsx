@@ -21,7 +21,7 @@ export default function ContactUsPage() {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message })
+        body: JSON.stringify({ name, email, message, website: '' })
       });
 
       const json = await response.json();
@@ -43,31 +43,34 @@ export default function ContactUsPage() {
   };
 
   return (
-    <section className="space-y-6 [font-family:'Trebuchet_MS','Lucida_Sans_Unicode','Lucida_Grande','Verdana',sans-serif]">
+    <section className="space-y-8">
       <div className="flex items-center justify-between gap-3">
         <Link className="text-sm text-slate-700 hover:text-slate-900" href="/">
           {'<- Back to homepage'}
         </Link>
       </div>
 
-      <article className="rounded-2xl border border-blue-900/20 bg-gradient-to-br from-[#12377a] via-[#17539d] to-[#2e92d6] p-8 text-white">
-        <p className="inline-block rounded-full border border-white/45 bg-white/10 px-4 py-1 text-xs tracking-[0.22em]">
-          CONTACT USA COIN COLLECTOR
-        </p>
-        <h1 className="mt-3 text-5xl leading-tight [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
+      <article className="rounded-lg border border-slate-200 bg-white p-7 shadow-sm md:p-9">
+        <h1 className="mt-4 text-4xl font-bold tracking-tight text-slate-950 md:text-5xl">
           Contact Us
         </h1>
-        <p className="mt-3 max-w-3xl text-lg text-blue-50">
+        <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
           Send us a message about products, sizing, or your order and we will get back to you as soon as possible.
+        </p>
+        <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-500">
+          We can help with product fit, coin sizing, storage recommendations, order questions, and Digital Vault
+          account support.
         </p>
       </article>
 
-      <form className="space-y-4 rounded-2xl border border-slate-200 bg-white p-6" onSubmit={onSubmit}>
-        <div className="grid gap-4 md:grid-cols-2">
+      <form className="space-y-5 rounded-lg border border-slate-200 bg-white p-6 shadow-sm" onSubmit={onSubmit}>
+        <input autoComplete="off" className="hidden" name="website" tabIndex={-1} type="text" />
+        <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1">
             <label htmlFor="name">Name</label>
             <input
               autoComplete="name"
+              className="w-full"
               id="name"
               name="name"
               onChange={(e) => setName(e.target.value)}
@@ -80,6 +83,7 @@ export default function ContactUsPage() {
             <label htmlFor="email">Email</label>
             <input
               autoComplete="email"
+              className="w-full"
               id="email"
               name="email"
               onChange={(e) => setEmail(e.target.value)}
@@ -107,7 +111,7 @@ export default function ContactUsPage() {
         {success && <p className="text-sm text-green-700">{success}</p>}
 
         <button
-          className="bg-[#102a63] px-5 py-3 text-sm font-semibold text-white hover:bg-[#1a3d86]"
+          className="bg-[#102a63] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#183b82] disabled:cursor-not-allowed disabled:opacity-70"
           disabled={loading}
           type="submit"
         >

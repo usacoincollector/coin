@@ -1,12 +1,14 @@
 ﻿import { cookies } from 'next/headers';
 import { createServerClient as createClient } from '@supabase/ssr';
+import { getSupabaseConfig } from '@/lib/supabase-config';
 
 export function createRouteClient() {
   const cookieStore = cookies();
+  const { url, anonKey } = getSupabaseConfig();
 
   return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    url,
+    anonKey,
     {
       cookies: {
         get(name: string) {

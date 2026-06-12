@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 const values = [
@@ -20,42 +21,51 @@ const values = [
 
 export default function AboutUsPage() {
   return (
-    <section className="space-y-6 [font-family:'Trebuchet_MS','Lucida_Sans_Unicode','Lucida_Grande','Verdana',sans-serif]">
+    <section className="space-y-8">
       <div className="flex items-center justify-between gap-3">
         <Link className="text-sm text-slate-700 hover:text-slate-900" href="/">
           {'<- Back to homepage'}
         </Link>
       </div>
 
-      <article className="rounded-2xl border border-slate-200 bg-gradient-to-r from-white to-[#fff7db] p-8">
-        <p className="inline-block rounded-full border border-slate-200 bg-white px-4 py-1 text-xs font-semibold tracking-[0.2em] text-slate-600">
-          ESTABLISHED 07/2007
-        </p>
-        <h1 className="mt-3 text-6xl text-[#102a63] [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
-          About USA Coin Collector
-        </h1>
-        <p className="mt-3 max-w-3xl text-lg leading-8 text-slate-700">
-          Built by collectors for collectors, with a focus on dependable supplies, honest pricing, and customer support
-          that keeps the hobby approachable for beginners and rewarding for seasoned collectors.
-        </p>
+      <article className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+        <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="p-7 md:p-9">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#b4232a]">Established 2007</p>
+            <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight text-slate-950 md:text-5xl">
+              About USA Coin Collector
+            </h1>
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
+              Built by collectors for collectors, with a focus on dependable supplies, honest pricing, and customer
+              support that keeps the hobby approachable for beginners and rewarding for seasoned collectors.
+            </p>
+          </div>
+          <div className="bg-slate-100 p-6">
+            <Image
+              alt="Coin collecting supplies"
+              className="h-full min-h-[260px] w-full rounded-md object-contain"
+              height={640}
+              src="/Vault.jpg"
+              width={640}
+            />
+          </div>
+        </div>
       </article>
 
       <div className="grid gap-4 md:grid-cols-3">
         {values.map((value) => (
-          <article className="rounded-xl border border-slate-200 bg-white p-5" key={value.title}>
-            <p className="text-xs font-semibold tracking-[0.2em] text-slate-500">{value.label}</p>
-            <h2 className="mt-2 text-4xl text-[#102a63] [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
-              {value.title}
-            </h2>
+          <article className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm" key={value.title}>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">{value.label}</p>
+            <h2 className="mt-3 text-xl font-bold text-slate-950">{value.title}</h2>
             <p className="mt-2 text-sm leading-7 text-slate-700">{value.copy}</p>
           </article>
         ))}
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <article className="rounded-2xl border border-slate-200 bg-white p-6">
-          <p className="text-xs font-semibold tracking-[0.2em] text-slate-500">ABOUT THIS STORE</p>
-          <h2 className="mt-2 text-5xl text-[#102a63] [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
+        <article className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">About this store</p>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950">
             Trusted Numismatic Supplies
           </h2>
           <p className="mt-3 text-sm leading-8 text-slate-700">
@@ -74,9 +84,9 @@ export default function AboutUsPage() {
           </p>
         </article>
 
-        <article className="rounded-2xl border border-blue-950/20 bg-[#102a63] p-6 text-white">
-          <p className="text-xs font-semibold tracking-[0.2em] text-blue-200">WHY IT STARTED</p>
-          <h2 className="mt-2 text-5xl [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
+        <article className="rounded-lg border border-blue-950/20 bg-[#102a63] p-6 text-white shadow-sm">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-200">Why it started</p>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight">
             Passion Turned Into a Business
           </h2>
           <p className="mt-3 text-sm leading-8 text-blue-50">
@@ -90,8 +100,8 @@ export default function AboutUsPage() {
         </article>
       </div>
 
-      <article className="rounded-2xl border border-[#f0e2b3] bg-[#fff9e5] p-6">
-        <h2 className="mt-2 text-5xl text-[#102a63] [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
+      <article className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
+        <h2 className="text-3xl font-bold tracking-tight text-slate-950">
           Top US Brand for Coin Flips &amp; Storage
         </h2>
         <p className="mt-3 max-w-4xl text-sm leading-8 text-slate-700">

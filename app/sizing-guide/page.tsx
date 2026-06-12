@@ -43,26 +43,23 @@ const detailedExamples = [
 
 export default function SizingGuidePage() {
   return (
-    <section className="space-y-6 [font-family:'Trebuchet_MS','Lucida_Sans_Unicode','Lucida_Grande','Verdana',sans-serif]">
+    <section className="space-y-8">
       <Link className="text-sm text-slate-700 hover:text-slate-900" href="/">
         {'<- Back to homepage'}
       </Link>
 
-      <div className="rounded-2xl border border-blue-900/20 bg-gradient-to-br from-[#12377a] via-[#17539d] to-[#2e92d6] p-8 text-white">
-        <p className="inline-block rounded-full border border-white/45 bg-white/10 px-4 py-1 text-xs tracking-[0.22em]">
-          COIN REFERENCE
-        </p>
-        <h1 className="mt-3 text-5xl leading-tight [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
+      <div className="rounded-lg border border-slate-200 bg-white p-7 shadow-sm md:p-9">
+        <h1 className="text-4xl font-bold tracking-tight text-[#b91c1c] md:text-5xl">
           Coin Sizing Guide
         </h1>
-        <p className="mt-3 max-w-3xl text-lg text-blue-50">
+        <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
           Quick reference sizes for common US coin types, plus detailed size guide for other coins to help you choose
           the right storage supplies.
         </p>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white">
-        <h2 className="border-b border-slate-200 bg-slate-50 px-4 py-3 text-4xl text-[#102a63] [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
+      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+        <h2 className="border-b border-slate-200 bg-slate-50 px-4 py-4 text-2xl font-bold text-slate-950">
           Quick Size Chart
         </h2>
         <div className="overflow-x-auto">
@@ -90,18 +87,16 @@ export default function SizingGuidePage() {
       </div>
 
       <div>
-        <p className="text-xs font-semibold tracking-[0.28em] text-slate-500">DETAILED FIT NOTES</p>
-        <h2 className="mt-2 text-5xl text-[#102a63] [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
+        <p className="text-sm font-bold uppercase tracking-[0.2em] text-slate-500">Detailed fit notes</p>
+        <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950 md:text-4xl">
           Coin-by-Coin Examples
         </h2>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         {detailedExamples.map((example) => (
-          <article className="rounded-xl border border-slate-200 bg-white p-5" key={example.title}>
-            <h3 className="text-4xl text-[#102a63] [font-family:'Impact','Haettenschweiler','Arial_Narrow_Bold',sans-serif]">
-              {example.title}
-            </h3>
+          <article className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm" key={example.title}>
+            <h3 className="text-xl font-bold text-[#102a63]">{example.title}</h3>
             <p className="mt-2 text-sm leading-7 text-slate-700">{example.copy}</p>
           </article>
         ))}

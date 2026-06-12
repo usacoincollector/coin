@@ -39,7 +39,15 @@ export function AuthForm({ mode, emailVerified = false, passwordReset = false }:
     setMessage('');
     setShowVerifyPopup(false);
 
-    const supabase = createBrowserClient();
+    let supabase;
+
+    try {
+      supabase = createBrowserClient();
+    } catch {
+      setError('Account access is not configured yet. Please contact support.');
+      setLoading(false);
+      return;
+    }
 
     if (mode === 'signup') {
       try {

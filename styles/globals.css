@@ -7,7 +7,8 @@
 }
 
 body {
-  @apply bg-bg text-ink;
+  @apply bg-[#f7f8fb] text-ink antialiased;
+  font-family: Lato, Arial, Helvetica, sans-serif;
 }
 
 input,
@@ -19,4 +20,9 @@ select {
 
 label {
   @apply text-sm font-medium;
+}
+
+a,
+button {
+  @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#102a63];
 }

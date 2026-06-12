@@ -3,10 +3,33 @@ import nodemailer from 'nodemailer';
 import { z } from 'zod';
 
 const contactSchema = z.object({
-  name: z.string().trim().min(1),
+  name: z.string().trim().min(1).max(120),
   email: z.string().trim().email(),
-  message: z.string().trim().min(1)
+  message: z.string().trim().min(1).max(5000),
+  website: z.string().optional()
 });
+
+const rateLimitWindowMs = 60 * 60 * 1000;
+const maxMessagesPerWindow = 5;
+const contactAttempts = new Map<string, { count: number; resetAt: number }>();
+
+function getClientKey(request: Request) {
+  const forwardedFor = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim();
+  return forwardedFor || request.headers.get('x-real-ip') || 'unknown';
+}
+
+function isRateLimited(key: string) {
+  const now = Date.now();
+  const current = contactAttempts.get(key);
+
+  if (!current || current.resetAt < now) {
+    contactAttempts.set(key, { count: 1, resetAt: now + rateLimitWindowMs });
+    return false;
+  }
+
+  current.count += 1;
+  return current.count > maxMessagesPerWindow;
+}
 
 export async function POST(request: Request) {
   try {
@@ -15,6 +38,14 @@ export async function POST(request: Request) {
 
     if (!parsed.success) {
       return NextResponse.json({ error: 'Please fill in all required fields.' }, { status: 400 });
+    }
+
+    if (parsed.data.website) {
+      return NextResponse.json({ ok: true });
+    }
+
+    if (isRateLimited(getClientKey(request))) {
+      return NextResponse.json({ error: 'Too many messages. Please try again later.' }, { status: 429 });
     }
 
     const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
@@ -38,13 +69,14 @@ export async function POST(request: Request) {
     });
 
     const safeMessage = parsed.data.message.replace(/\r\n/g, '\n').trim();
+    const safeName = parsed.data.name.replace(/[\r\n]/g, ' ').trim();
 
     await transporter.sendMail({
       from: `"USA Coin Collector Contact Form" <${SMTP_USER}>`,
       to: contactTo,
       replyTo: parsed.data.email,
-      subject: `Contact Form: ${parsed.data.name}`,
-      text: `Name: ${parsed.data.name}\nEmail: ${parsed.data.email}\n\nMessage:\n${safeMessage}`
+      subject: `Contact Form: ${safeName}`,
+      text: `Name: ${safeName}\nEmail: ${parsed.data.email}\n\nMessage:\n${safeMessage}`
     });
 
     return NextResponse.json({ ok: true });

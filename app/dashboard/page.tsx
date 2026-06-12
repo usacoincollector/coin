@@ -141,6 +141,8 @@ export default async function DashboardPage() {
                   })
                   .filter((url: string | null): url is string => Boolean(url))
                   .map((url: string) => (
+                    // Signed storage URLs can vary per request, so keep these as plain images.
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img alt={coin.name} className="h-20 w-full rounded-md object-cover" key={url} src={url} />
                   ))}
               </div>

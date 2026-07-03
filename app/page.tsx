@@ -27,15 +27,36 @@ const categories = [
 const features = [
   {
     title: 'Archival Safe',
-    copy: 'Materials selected for long-term protection and clean presentation.'
+    copy: 'We only sell supplies selected long-term protection',
+    icon: '/sheild.png'
   },
   {
-    title: 'Collector Focused',
-    copy: 'Practical sizing and storage options built around real collecting workflows.'
+    title: 'Fast Shipping',
+    copy: 'Orders ship quickly to collectors nationwide.',
+    icon: '/bolt.png'
   },
   {
-    title: 'Quality Materials',
-    copy: 'Durable supplies selected for clarity, consistency, and dependable everyday protection.'
+    title: 'Expert Support',
+    copy: 'Our team can help you find the right supplies.',
+    icon: '/book.png'
+  }
+];
+
+const learningGuides = [
+  {
+    title: 'New to Coin Collecting?',
+    copy: "Learn the basics of starting your collection with our beginner's guide.",
+    href: '/faq#beginner'
+  },
+  {
+    title: 'How to Protect Your Coins',
+    copy: 'Best practices for preserving the condition and value of your coins.',
+    href: '/faq#protect'
+  },
+  {
+    title: 'Choosing the Right Storage',
+    copy: 'Compare storage solutions and find what works for your collection.',
+    href: '/faq#storage'
   }
 ];
 
@@ -45,13 +66,12 @@ export default function HomePage() {
       <section className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
         <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="p-7 md:p-10 lg:p-12">
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#b4232a]">Professional coin supplies</p>
-            <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight text-slate-950 md:text-6xl">
-              Protect, organize, and track your collection with confidence.
+            <h1 className="max-w-3xl text-4xl font-bold tracking-tight text-slate-950 md:text-6xl">
+              Protect, organize, and store your collection with confidence.
             </h1>
             <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-              Coin Shield products pair archival-safe coin storage with a free Digital Vault, giving collectors a
-              dependable way to protect physical pieces and manage collection records in one place.
+              Offering only premium archival-safe coin storage solutions, fast U.S. shipping and excellent customer
+              service.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link
@@ -69,7 +89,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="bg-slate-100">
+          <div className="relative bg-slate-100">
             <Image
               alt="Coin Shield marketing banner"
               className="h-full min-h-[320px] w-full object-cover"
@@ -78,6 +98,28 @@ export default function HomePage() {
               src="/MH Marketing Banner.png"
               width={640}
             />
+            <a
+              className="absolute left-1/2 top-1/2 inline-flex -translate-x-1/2 -translate-y-1/2 items-center gap-3 rounded-md bg-[#c89e28] px-7 py-4 text-lg font-bold text-black shadow-lg transition-opacity duration-200 hover:opacity-75 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#c89e28]"
+              href="https://www.ebay.com/str/usacoincollector"
+              rel="noreferrer"
+              target="_blank"
+            >
+              <svg
+                aria-hidden="true"
+                className="h-6 w-6"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <circle cx="8" cy="21" r="1" />
+                <circle cx="19" cy="21" r="1" />
+                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+              </svg>
+              <span>Shop All Supplies</span>
+            </a>
           </div>
         </div>
       </section>
@@ -109,10 +151,31 @@ export default function HomePage() {
       <section className="grid gap-4 md:grid-cols-3">
         {features.map((feature) => (
           <article className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm" key={feature.title}>
-            <h2 className="text-xl font-bold text-slate-950">{feature.title}</h2>
+            <div className="flex items-center gap-3">
+              <Image alt="" aria-hidden="true" className="h-7 w-7 object-contain" height={28} src={feature.icon} width={28} />
+              <h2 className="text-xl font-bold text-slate-950">{feature.title}</h2>
+            </div>
             <p className="mt-3 leading-7 text-slate-600">{feature.copy}</p>
           </article>
         ))}
+      </section>
+
+      <section className="space-y-8">
+        <h2 className="text-center text-3xl font-bold tracking-tight text-slate-950 md:text-4xl">
+          Learning & Guides
+        </h2>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          {learningGuides.map((guide) => (
+            <article className="rounded-lg border border-slate-200 bg-white p-7 shadow-sm" key={guide.title}>
+              <h3 className="text-2xl font-bold text-slate-950">{guide.title}</h3>
+              <p className="mt-5 text-lg leading-8 text-slate-600">{guide.copy}</p>
+              <Link className="mt-7 inline-block font-semibold text-[#c89e28] transition hover:text-[#a47d13]" href={guide.href}>
+                {'Read More ->'}
+              </Link>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="rounded-lg border border-slate-200 bg-white p-7 shadow-sm md:p-9">

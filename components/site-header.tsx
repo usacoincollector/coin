@@ -1,12 +1,8 @@
-import Image from 'next/image';
-import { Dancing_Script } from 'next/font/google';
-import Link from 'next/link';
+'use client';
 
-const dancingScript = Dancing_Script({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  display: 'swap'
-});
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const navLinks = [
   { href: '/sizing-guide', label: 'Sizing Guide' },
@@ -15,23 +11,33 @@ const navLinks = [
 ];
 
 export function SiteHeader() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const updateScrolled = () => setIsScrolled(window.scrollY > 10);
+
+    updateScrolled();
+    window.addEventListener('scroll', updateScrolled, { passive: true });
+
+    return () => window.removeEventListener('scroll', updateScrolled);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-30 border-b border-slate-800 bg-black">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-4 md:flex-row md:items-center md:justify-between md:px-6">
-        <Link className="flex items-center gap-3 text-white" href="/">
+    <header
+      className={`sticky top-0 z-30 border-b border-[#a47d13]/70 transition-colors duration-300 ${
+        isScrolled ? 'bg-[#c89e28]/85 shadow-lg backdrop-blur-md' : 'bg-[#c89e28]'
+      }`}
+    >
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-1.5 px-4 py-1.5 md:flex-row md:items-center md:justify-between md:px-6">
+        <Link className="flex items-center text-white" href="/" aria-label="USA Coin Collector home">
           <Image
-            alt="Coin Shield logo"
-            className="h-16 w-16 rounded-md object-contain sm:h-24 sm:w-24"
-            height={96}
+            alt="USA Coin Collector logo banner"
+            className="h-auto w-44 object-contain sm:w-56"
+            height={100}
             priority
-            src="/logo_shop.png"
-            width={96}
+            src="/LogoBanner.png"
+            width={360}
           />
-          <span>
-            <span className={`${dancingScript.className} block text-4xl font-bold text-white sm:text-5xl`}>
-              USA Coin Collector
-            </span>
-          </span>
         </Link>
 
         <nav aria-label="Primary navigation" className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-medium">
@@ -41,16 +47,13 @@ export function SiteHeader() {
             </Link>
           ))}
           <a
-            className="rounded-md bg-[#102a63] px-4 py-2 text-white transition hover:bg-[#183b82]"
+            className="rounded-md bg-[#102a63] px-3 py-1.5 text-white transition hover:bg-[#183b82]"
             href="https://www.ebay.com/str/usacoincollector"
             rel="noreferrer"
             target="_blank"
           >
             Shop Store
           </a>
-          <Link className="text-white/90 transition hover:text-white" href="/contact-us">
-            Contact
-          </Link>
         </nav>
       </div>
     </header>

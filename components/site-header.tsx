@@ -42,7 +42,7 @@ export function SiteHeader() {
 
         <nav aria-label="Primary navigation" className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-medium">
           {navLinks.map((link) => (
-            <Link className="text-white/90 transition hover:text-white" href={link.href} key={link.href}>
+            <Link className="text-white/90 transition hover:text-[#223f88]" href={link.href} key={link.href}>
               {link.label}
             </Link>
           ))}

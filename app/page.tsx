@@ -167,7 +167,10 @@ export default function HomePage() {
 
         <div className="grid gap-4 md:grid-cols-3">
           {learningGuides.map((guide) => (
-            <article className="rounded-lg border border-slate-200 bg-white p-7 shadow-sm" key={guide.title}>
+            <article
+              className="rounded-lg border border-slate-200 bg-white p-7 shadow-sm transition hover:border-[#c89e28]"
+              key={guide.title}
+            >
               <h3 className="text-2xl font-bold text-slate-950">{guide.title}</h3>
               <p className="mt-5 text-lg leading-8 text-slate-600">{guide.copy}</p>
               <Link className="mt-7 inline-block font-semibold text-[#c89e28] transition hover:text-[#a47d13]" href={guide.href}>
@@ -178,7 +181,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="rounded-lg border border-slate-200 bg-white p-7 shadow-sm md:p-9">
+      <section className="rounded-lg border border-slate-200 bg-white p-7 shadow-sm transition [&:has(a:hover)]:border-[#c89e28] md:p-9">
         <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-slate-500">Digital Vault App</p>
@@ -199,7 +202,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="rounded-lg border border-slate-200 bg-white p-7 shadow-sm md:p-9">
+      <section className="rounded-lg border border-slate-200 bg-white p-7 shadow-sm transition [&:has(a:hover)]:border-[#c89e28] md:p-9">
         <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-slate-500">Ready to get organized?</p>

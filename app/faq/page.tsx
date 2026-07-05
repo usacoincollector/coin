@@ -26,7 +26,7 @@ const sections = [
       {
         question: 'How much does it cost to start collecting?',
         answer:
-          'Coin collecting can be enjoyed at any budget level. You can start with just a few dollars to acquire coins, plus basic storage materials. Our products range from affordable starter kits ($20-50) to premium collections ($200+).'
+          'Coin collecting can be enjoyed at any budget level. You can start with extras coins you have laying around. Our products range from affordable sample packs to bulk supply orders.'
       },
       {
         question: 'Where can I find coins to collect?',

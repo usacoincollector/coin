@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { createServerClient } from '@/lib/supabase-server';
 import { isSupabaseConfigured } from '@/lib/supabase-config';
@@ -38,6 +39,17 @@ export default async function DigitalVaultPage() {
         </div>
       </header>
 
+      <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+        <Image
+          alt="Coin Shield Digital Vault preview"
+          className="h-auto w-full object-cover"
+          height={720}
+          priority
+          src="/Vault2.png"
+          width={1280}
+        />
+      </div>
+
       <section className="grid gap-4 md:grid-cols-3">
         <article className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
           <h2 className="text-lg font-semibold text-slate-900">Free to Use</h2>
@@ -48,13 +60,13 @@ export default async function DigitalVaultPage() {
         <article className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
           <h2 className="text-lg font-semibold text-slate-900">Private by Design</h2>
           <p className="mt-2 text-sm text-slate-600">
-            Your collection details stay tied to your account so you can manage purchase values, notes, and images with confidence.
+            Your collection details stay tied to your account so only you can manage purchase values, notes, and images with confidence.
           </p>
         </article>
         <article className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
           <h2 className="text-lg font-semibold text-slate-900">Built for Collectors</h2>
           <p className="mt-2 text-sm text-slate-600">
-            Track inventory, estimated values, storage locations, and images in a format designed around real collecting needs.
+            Track inventory, estimated values, storage locations, and images to easily trackyour collection.
           </p>
         </article>
       </section>

@@ -58,8 +58,7 @@ export default function ContactUsPage() {
           Send us a message about products, sizing, or your order and we will get back to you as soon as possible.
         </p>
         <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-500">
-          We can help with product fit, coin sizing, storage recommendations, order questions, and Digital Vault
-          account support.
+          We typically reply to all inquires within 24 hours.
         </p>
       </article>
 

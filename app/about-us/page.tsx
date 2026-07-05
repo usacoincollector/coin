@@ -111,6 +111,23 @@ export default function AboutUsPage() {
           for our own collections.
         </p>
       </article>
+
+      <section className="rounded-lg bg-[#fbf1e3] px-6 py-10 text-center">
+        <h2 className="text-3xl font-bold tracking-tight text-slate-950">
+          Ready to Upgrade Your Collection?
+        </h2>
+        <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-slate-600">
+          Explore our complete selection of premium coin collecting supplies.
+        </p>
+        <a
+          className="mt-7 inline-flex min-w-[176px] items-center justify-center rounded-xl bg-[#ffad3b] px-8 py-4 text-lg font-bold text-black transition hover:bg-[#f29f2c] focus:outline-none focus:ring-2 focus:ring-[#102a63] focus:ring-offset-2 focus:ring-offset-[#fbf1e3]"
+          href="https://www.ebay.com/str/usacoincollector"
+          rel="noreferrer"
+          target="_blank"
+        >
+          Shop Now
+        </a>
+      </section>
     </section>
   );
 }

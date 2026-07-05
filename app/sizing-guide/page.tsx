@@ -66,7 +66,7 @@ export default function SizingGuidePage() {
           <table className="min-w-full text-left text-sm">
             <thead className="bg-slate-50 text-slate-700">
               <tr>
-                <th className="px-4 py-3 font-semibold">Coin Type</th>
+                <th className="px-4 py-3 font-semibold">Size</th>
                 <th className="px-4 py-3 font-semibold">Millimeters</th>
                 <th className="px-4 py-3 font-semibold">Inches</th>
                 <th className="px-4 py-3 font-semibold">Common Use</th>

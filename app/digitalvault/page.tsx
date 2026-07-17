@@ -9,7 +9,7 @@ export default async function DigitalVaultPage() {
   return (
     <section className="space-y-8">
       <Link className="text-sm text-gray-600 hover:text-gray-900" href="/">
-        {'<- Back to homepage'}
+        ← Back to homepage
       </Link>
 
       <header className="space-y-5 rounded-lg border border-slate-200 bg-white p-7 shadow-sm md:p-9">

@@ -45,7 +45,7 @@ export default function SizingGuidePage() {
   return (
     <section className="space-y-8">
       <Link className="text-sm text-slate-700 hover:text-slate-900" href="/">
-        {'<- Back to homepage'}
+        ← Back to homepage
       </Link>
 
       <div className="rounded-lg border border-slate-200 bg-white p-7 shadow-sm md:p-9">

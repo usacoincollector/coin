@@ -46,7 +46,7 @@ export default function ContactUsPage() {
     <section className="space-y-8">
       <div className="flex items-center justify-between gap-3">
         <Link className="text-sm text-slate-700 hover:text-slate-900" href="/">
-          {'<- Back to homepage'}
+          ← Back to homepage
         </Link>
       </div>
 

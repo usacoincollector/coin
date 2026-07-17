@@ -22,7 +22,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     <section className="space-y-4">
       <EmailVerifiedPopup />
       <Link className="text-sm text-gray-600 hover:text-gray-900" href="/">
-        {'<- Back to homepage'}
+        ← Back to homepage
       </Link>
       <AuthForm
         emailVerified={searchParams?.emailVerified === '1' || searchParams?.verified === '1'}

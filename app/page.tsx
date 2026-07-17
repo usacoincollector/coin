@@ -1,5 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { EducationCard } from '@/components/education-card';
+import { EbayProfitCalculator } from '@/components/ebay-profit-calculator';
+import { educationArticles } from '@/lib/collector-education';
 
 const categories = [
   {
@@ -42,34 +45,17 @@ const features = [
   }
 ];
 
-const learningGuides = [
-  {
-    title: 'New to Coin Collecting?',
-    copy: "Learn the basics of starting your collection with our beginner's guide.",
-    href: '/faq#beginner'
-  },
-  {
-    title: 'How to Protect Your Coins',
-    copy: 'Best practices for preserving the condition and value of your coins.',
-    href: '/faq#protect'
-  },
-  {
-    title: 'Choosing the Right Storage',
-    copy: 'Compare storage solutions and find what works for your collection.',
-    href: '/faq#storage'
-  }
-];
-
 export default function HomePage() {
   return (
     <div className="space-y-14 pb-12">
       <section className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
         <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
-          <div className="p-7 md:p-10 lg:p-12">
-            <h1 className="max-w-3xl text-4xl font-bold tracking-tight text-slate-950 md:text-6xl">
-              Protect, organize, and store your collection with confidence.
+          <div className="bg-[linear-gradient(145deg,#0b171d_0%,#17242d_68%,#fff_100%)] p-7 md:p-10 lg:bg-[linear-gradient(90deg,#0b171d_0%,#17242d_72%,#fff_100%)] lg:p-12">
+            <h1 className="max-w-3xl text-4xl leading-[1.05] tracking-tight md:text-6xl [font-family:Georgia,'Times_New_Roman',serif]">
+              <span className="text-white">Protect, organize, and store </span>
+              <span className="italic text-[#d2aa62]">your collection with confidence.</span>
             </h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-white md:text-xl [font-family:Georgia,'Times_New_Roman',serif]">
               Offering only premium archival-safe coin storage solutions, fast U.S. shipping and excellent customer
               service.
             </p>
@@ -160,26 +146,25 @@ export default function HomePage() {
         ))}
       </section>
 
-      <section className="space-y-8">
-        <h2 className="text-center text-3xl font-bold tracking-tight text-slate-950 md:text-4xl">
-          Learning & Guides
-        </h2>
-
-        <div className="grid gap-4 md:grid-cols-3">
-          {learningGuides.map((guide) => (
-            <article
-              className="rounded-lg border border-slate-200 bg-white p-7 shadow-sm transition hover:border-[#c89e28]"
-              key={guide.title}
-            >
-              <h3 className="text-2xl font-bold text-slate-950">{guide.title}</h3>
-              <p className="mt-5 text-lg leading-8 text-slate-600">{guide.copy}</p>
-              <Link className="mt-7 inline-block font-semibold text-[#c89e28] transition hover:text-[#a47d13]" href={guide.href}>
-                {'Read More ->'}
-              </Link>
-            </article>
-          ))}
+      <section className="-mx-4 bg-[#0c2737] px-4 py-12 text-white md:-mx-6 md:px-10 md:py-14">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#d5b865]">Collector Education</p>
+            <h2 className="mt-4 font-serif text-4xl font-normal md:text-5xl">Knowledge protects value.</h2>
+            <p className="mt-4 text-lg text-slate-300">Practical guides written for collectors—without the jargon.</p>
+          </div>
+          <Link className="w-fit border-b border-[#d5b865] pb-2 text-sm font-bold text-white hover:text-[#e3c86f]" href="/collector-education">Visit the learning center →</Link>
+        </div>
+        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          <EducationCard article={educationArticles[0]} featured />
+          <div className="grid gap-6 sm:grid-cols-2">
+            <EducationCard article={educationArticles[1]} />
+            <EducationCard article={educationArticles[2]} />
+          </div>
         </div>
       </section>
+
+      <EbayProfitCalculator />
 
       <section className="rounded-lg border border-slate-200 bg-white p-7 shadow-sm transition [&:has(a:hover)]:border-[#c89e28] md:p-9">
         <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">

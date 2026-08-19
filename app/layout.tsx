@@ -5,7 +5,10 @@ import { SiteHeader } from '@/components/site-header';
 
 export const metadata: Metadata = {
   title: 'USA Coin Collector',
-  description: 'Professional coin collecting supplies and a secure digital vault for collectors.'
+  description: 'Professional coin collecting supplies and a secure digital vault for collectors.',
+  icons: {
+    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }]
+  }
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -71,15 +71,15 @@ export function EbayProfitCalculator() {
   }, [coinCost, listPrice, promotedRate, sellerLevel, shipping, storeLevel, supplies]);
 
   return (
-    <section className="-mx-4 overflow-hidden border-y border-[#d7d2c7] bg-[#f8f7f3] md:-mx-6 md:border-x">
+    <section className="overflow-hidden border-y border-[#d7d2c7] bg-[#f8f7f3] md:border-x">
       <div className="px-6 py-10 md:px-10 md:py-12">
         <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#9b762f]">Tools for eBay sellers</p>
-            <h2 className="mt-4 font-serif text-4xl font-normal tracking-tight text-[#102733] md:text-5xl">Know your profit before you list.</h2>
+            <h2 className="mt-4 font-serif text-4xl font-normal tracking-tight text-[#102733] md:text-5xl">eBay Profit Calculator for Selling Your Coins</h2>
             <p className="mt-4 text-lg text-slate-600">Estimate marketplace fees, shipping, and your true take-home amount.</p>
           </div>
-          <span className="w-fit bg-[#e9e2d2] px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-[#765f31]">Live calculator</span>
+          <span className="w-fit whitespace-nowrap bg-[#e9e2d2] px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-[#765f31]">Live calculator</span>
         </div>
       </div>
 

@@ -30,7 +30,7 @@ const categories = [
 const features = [
   {
     title: 'Archival Safe',
-    copy: 'We only sell supplies selected long-term protection',
+    copy: 'We only sell supplies selected for long-term protection',
     icon: '/sheild.png'
   },
   {
@@ -59,20 +59,6 @@ export default function HomePage() {
               Offering only premium archival-safe coin storage solutions, fast U.S. shipping and excellent customer
               service.
             </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Link
-                className="rounded-md bg-[#102a63] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#183b82]"
-                href="/digitalvault"
-              >
-                Open Digital Vault
-              </Link>
-              <Link
-                className="rounded-md border border-slate-300 bg-white px-5 py-3 text-sm font-bold text-slate-900 transition hover:border-[#102a63] hover:text-[#102a63]"
-                href="/sizing-guide"
-              >
-                View Sizing Guide
-              </Link>
-            </div>
           </div>
 
           <div className="relative bg-slate-100">
@@ -146,12 +132,12 @@ export default function HomePage() {
         ))}
       </section>
 
-      <section className="-mx-4 bg-[#0c2737] px-4 py-12 text-white md:-mx-6 md:px-10 md:py-14">
+      <section className="bg-[#0c2737] px-4 py-12 text-white md:px-10 md:py-14">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#d5b865]">Collector Education</p>
+            <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#d5b865]">Collector Education Center</p>
             <h2 className="mt-4 font-serif text-4xl font-normal md:text-5xl">Knowledge protects value.</h2>
-            <p className="mt-4 text-lg text-slate-300">Practical guides written for collectors—without the jargon.</p>
+            <p className="mt-4 text-lg text-slate-300">Practical guides written for collectors</p>
           </div>
           <Link className="w-fit border-b border-[#d5b865] pb-2 text-sm font-bold text-white hover:text-[#e3c86f]" href="/collector-education">Visit the learning center →</Link>
         </div>
@@ -166,26 +152,33 @@ export default function HomePage() {
 
       <EbayProfitCalculator />
 
-      <section className="rounded-lg border border-slate-200 bg-white p-7 shadow-sm transition [&:has(a:hover)]:border-[#c89e28] md:p-9">
-        <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
+      <article className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition [&:has(a:hover)]:border-[#c89e28]">
+        <div className="grid gap-6 p-7 md:grid-cols-[1fr_auto] md:items-center md:p-9">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-slate-500">Digital Vault App</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950">
-              Catalog your collection as it grows.
-            </h2>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-950">Catalog your collection as it grows.</h2>
             <p className="mt-3 max-w-3xl leading-7 text-slate-600">
-              Use the free Digital Vault to record coin details, photos, values, purchase history, and storage
-              locations in one organized place.
+              Use the free Digital Vault to record coin details, photos, values, purchase history, and storage locations
+              in one organized place.
             </p>
           </div>
           <Link
-            className="rounded-md bg-[#102a63] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#183b82] md:justify-self-end"
-            href="/digitalvault"
+            className="inline-flex w-fit items-center justify-center rounded-md bg-[#c89e28] px-6 py-3 text-sm font-bold text-black shadow-sm transition hover:bg-[#d5ad3c] focus:outline-none focus:ring-2 focus:ring-[#102a63] focus:ring-offset-2 md:justify-self-end"
+            href="https://www.usacoincollector.com/digitalvault"
           >
             Open Digital Vault
           </Link>
         </div>
-      </section>
+        <div className="bg-slate-100">
+          <Image
+            alt="Digital Vault App for organizing and tracking a coin collection"
+            className="h-auto w-full object-contain"
+            height={900}
+            src="/digitalvaultmarketing.jpg"
+            width={1600}
+          />
+        </div>
+      </article>
 
       <section className="rounded-lg border border-slate-200 bg-white p-7 shadow-sm transition [&:has(a:hover)]:border-[#c89e28] md:p-9">
         <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">

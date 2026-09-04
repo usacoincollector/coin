@@ -10,6 +10,8 @@ export type HolderSize = {
 
 export type CoinSizeRecord = {
   name: string;
+  id?: string;
+  diameterMm?: string;
   holderId: HolderId;
   aliases?: string[];
   note?: string;
@@ -63,6 +65,7 @@ export const coinSizes: CoinSizeRecord[] = [
   { name: 'Walking Liberty Half Dollar (1916–1947)', holderId: 'half-dollar', aliases: ['walker half'] },
   { name: 'Franklin Half Dollar (1948–1963)', holderId: 'half-dollar' },
   { name: 'Modern US One Dollar (1979–1981, 1999–present)', holderId: 'small-dollar', aliases: ['modern dollar'] },
+  { name: '2026 President Donald J. Trump $1 Coin', id: '2026-trump-dollar', diameterMm: '26.49 mm', holderId: 'small-dollar', aliases: ['2026 trump dollar', 'trump dollar', 'trump $1 coin'] },
   { name: 'Susan B. Anthony Dollar (1979–1981, 1999)', holderId: 'small-dollar', aliases: ['sba dollar'] },
   { name: 'Sacagawea Dollar (2000–date)', holderId: 'small-dollar', aliases: ['golden dollar'] },
   { name: 'Native American Dollar (2009–date)', holderId: 'small-dollar' },

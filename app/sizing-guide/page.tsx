@@ -1,11 +1,18 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CoinSizeLookup } from '@/components/coin-size-lookup';
-import { holderSizes } from '@/lib/coin-sizing';
+import { coinSizes, holderSizes } from '@/lib/coin-sizing';
 
 export const metadata: Metadata = {
   title: 'Coin Sizing Guide | USA Coin Collector',
-  description: 'Find the correct Coin Shield 2x2 cardboard coin holder opening for common US coins.'
+  description: 'Find the correct Coin Shield 2x2 cardboard coin holder opening for common US coins.',
+  alternates: { canonical: '/sizing-guide' },
+  openGraph: {
+    title: 'Coin Sizing Guide | USA Coin Collector',
+    description: 'Find the correct Coin Shield 2x2 cardboard coin holder opening for common US coins.',
+    url: '/sizing-guide',
+    type: 'website'
+  }
 };
 
 export default function SizingGuidePage() {
@@ -48,7 +55,63 @@ export default function SizingGuidePage() {
 
       <CoinSizeLookup />
 
-      <section className="border border-slate-200 bg-white p-7 shadow-sm md:flex md:items-center md:justify-between md:gap-8 md:p-9">
+      <details className="border border-slate-200 bg-white shadow-sm">
+      <summary className="cursor-pointer px-6 py-5 font-serif text-2xl text-slate-950 md:px-8">
+        Browse the complete coin compatibility directory
+      </summary>
+      <section
+        aria-labelledby="complete-compatibility-directory"
+        className="border-t border-slate-200 px-6 py-8 md:px-8"
+      >
+        <h2 className="font-serif text-3xl font-normal text-slate-950" id="complete-compatibility-directory">
+          Complete Coin Shield Holder Compatibility Directory
+        </h2>
+        <p className="mt-3 max-w-3xl leading-7 text-slate-600">
+          Browse every coin in the sizing database. Each entry lists the recommended Coin Shield holder opening.
+        </p>
+        <div className="mt-8 space-y-10">
+          {holderSizes.map((holder) => {
+            const compatibleCoins = coinSizes.filter((coin) => coin.holderId === holder.id);
+            return (
+              <section aria-labelledby={`holder-${holder.id}`} key={holder.id}>
+                <h3 className="font-serif text-2xl font-normal text-slate-950" id={`holder-${holder.id}`}>
+                  {holder.name} Holder — {holder.openingMm}
+                </h3>
+                <div className="mt-4 grid gap-4 md:grid-cols-2">
+                  {compatibleCoins.map((coin) => {
+                    const anchor =
+                      coin.id ??
+                      coin.name
+                        .toLowerCase()
+                        .replace(/[^a-z0-9]+/g, '-')
+                        .replace(/^-|-$/g, '');
+
+                    return (
+                      <article className="border border-slate-200 bg-[#f8f7f3] p-5" id={anchor} key={coin.name}>
+                        <h4 className="font-serif text-xl font-normal text-slate-950">
+                          <a className="hover:text-[#a47d13]" href={`#${anchor}`}>
+                            {coin.name}
+                          </a>
+                        </h4>
+                        <p className="mt-3 text-sm leading-6 text-slate-700">
+                          Recommended holder: <strong>{holder.name} — {holder.openingMm}</strong>
+                        </p>
+                        <p className="mt-1 text-sm leading-6 text-slate-600">
+                          Diameter: {coin.diameterMm ?? holder.openingMm}
+                        </p>
+                        {coin.note && <p className="mt-2 text-sm leading-6 text-slate-600">{coin.note}</p>}
+                      </article>
+                    );
+                  })}
+                </div>
+              </section>
+            );
+          })}
+        </div>
+      </section>
+    </details>
+
+    <section className="border border-slate-200 bg-white p-7 shadow-sm md:flex md:items-center md:justify-between md:gap-8 md:p-9">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#a47d13]">Ready to protect your collection?</p>
           <h2 className="mt-3 font-serif text-3xl font-normal text-slate-950">Shop archival-safe coin holders.</h2>

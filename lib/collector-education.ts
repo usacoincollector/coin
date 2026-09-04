@@ -18,6 +18,34 @@ export type EducationArticle = {
 
 export const educationArticles: EducationArticle[] = [
   {
+    slug: '2026-trump-dollar-july-4-privy-mark',
+    title: '2026 Trump $1 Coin: Find the July 4th Privy Mark',
+    category: '2026 Coin Guide',
+    readTime: '8 min read',
+    image: '/education-value.png',
+    imageAlt: 'Collectible dollar coin being examined with a magnifying glass',
+    summary: 'See where the limited July 4th privy mark appears, how the special coin differs from the standard issue, and the correct holder size.',
+    introduction: 'The 2026 Semiquincentennial President Donald J. Trump $1 Coin includes a limited subset struck with a July 4th privy mark. This guide explains where to inspect the coin and how to protect it.',
+    sections: [
+      {
+        heading: 'How to identify the July 4th privy mark',
+        paragraphs: ['Inspect the obverse, or heads side, in the open field to the left of the portrait and immediately above the five-pointed star near the lower-left edge. The small mark reads JULY / 4th on two lines.']
+      },
+      {
+        heading: 'Do not confuse the mark with the reverse design',
+        paragraphs: ['The large 250 on the reverse shield appears on the normal coin and is not the July 4th privy mark.']
+      },
+      {
+        heading: 'Production and value',
+        paragraphs: ['The U.S. Mint reports that 250,000 privy-mark coins were struck and randomly included in rolls and bags. Market values can change, and condition, grading, demand, and completed sales may influence price.']
+      },
+      {
+        heading: 'Protecting the coin',
+        paragraphs: ['Hold the coin by its edges, avoid cleaning, avoid PVC-containing storage, and use a correctly sized 26.49 mm Small Dollar holder.']
+      }
+    ]
+  },
+  {
     slug: 'how-to-store-coins-without-damaging-them',
     title: 'How to Store Coins Without Damaging Them',
     category: 'Storage guide',

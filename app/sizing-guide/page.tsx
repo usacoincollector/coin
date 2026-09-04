@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CoinSizeLookup } from '@/components/coin-size-lookup';
-import { coinSizes, holderSizes } from '@/lib/coin-sizing';
+import { coinSizes, diameterSources, formatCoinDiameter, formatMillimeters, holderSizes } from '@/lib/coin-sizing';
 
 export const metadata: Metadata = {
   title: 'Coin Sizing Guide | USA Coin Collector',
@@ -43,8 +43,8 @@ export default function SizingGuidePage() {
               {holderSizes.map((row) => (
                 <tr className="border-t border-slate-100" key={row.id}>
                   <td className="px-6 py-4 font-bold text-[#102a63]">{row.name}</td>
-                  <td className="px-6 py-4 text-slate-700">{row.openingMm}</td>
-                  <td className="px-6 py-4 text-slate-700">{row.openingInches}</td>
+                  <td className="px-6 py-4 text-slate-700">{formatMillimeters(row.sizeMm)}</td>
+                  <td className="px-6 py-4 text-slate-700">{row.sizeInches}</td>
                   <td className="px-6 py-4 text-slate-700">{row.commonUse}</td>
                 </tr>
               ))}
@@ -75,7 +75,7 @@ export default function SizingGuidePage() {
             return (
               <section aria-labelledby={`holder-${holder.id}`} key={holder.id}>
                 <h3 className="font-serif text-2xl font-normal text-slate-950" id={`holder-${holder.id}`}>
-                  {holder.name} Holder — {holder.openingMm}
+                  {holder.name} Holder — {formatMillimeters(holder.sizeMm)}
                 </h3>
                 <div className="mt-4 grid gap-4 md:grid-cols-2">
                   {compatibleCoins.map((coin) => {
@@ -94,10 +94,10 @@ export default function SizingGuidePage() {
                           </a>
                         </h4>
                         <p className="mt-3 text-sm leading-6 text-slate-700">
-                          Recommended holder: <strong>{holder.name} — {holder.openingMm}</strong>
+                          Actual coin diameter: <strong>{formatCoinDiameter(coin)}</strong>
                         </p>
                         <p className="mt-1 text-sm leading-6 text-slate-600">
-                          Diameter: {coin.diameterMm ?? holder.openingMm}
+                          Recommended Coin Shield holder: <strong>{holder.name} — {formatMillimeters(holder.sizeMm)}</strong>
                         </p>
                         {coin.note && <p className="mt-2 text-sm leading-6 text-slate-600">{coin.note}</p>}
                       </article>
@@ -110,6 +110,30 @@ export default function SizingGuidePage() {
         </div>
       </section>
     </details>
+
+    <section aria-labelledby="no-holder-heading" className="border border-slate-200 bg-white px-6 py-8 shadow-sm md:px-8">
+      <h2 className="font-serif text-3xl font-normal text-slate-950" id="no-holder-heading">Coins without a confirmed Coin Shield fit</h2>
+      <p className="mt-3 max-w-3xl leading-7 text-slate-600">These coins remain searchable, but no size is recommended where the nominal holder dimensions or undocumented opening tolerances do not support a confident fit.</p>
+      <div className="mt-6 grid gap-4 md:grid-cols-2">
+        {coinSizes.filter((coin) => coin.holderId === null).map((coin) => {
+          const anchor = coin.id ?? coin.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          return <article className="border border-slate-200 bg-[#f8f7f3] p-5" id={anchor} key={coin.name}>
+            <h3 className="font-serif text-xl font-normal text-slate-950"><a className="hover:text-[#a47d13]" href={`#${anchor}`}>{coin.name}</a></h3>
+            <p className="mt-3 text-sm leading-6 text-slate-700">Actual coin diameter: <strong>{formatCoinDiameter(coin)}</strong></p>
+            <p className="mt-1 text-sm font-semibold leading-6 text-slate-700">No recommended Coin Shield 2×2 size currently available</p>
+            {coin.note && <p className="mt-2 text-sm leading-6 text-slate-600">{coin.note}</p>}
+          </article>;
+        })}
+      </div>
+    </section>
+
+    <section aria-labelledby="diameter-sources-heading" className="border border-slate-200 bg-white p-7 shadow-sm md:p-9">
+      <h2 className="font-serif text-3xl font-normal text-slate-950" id="diameter-sources-heading">Diameter Data Sources</h2>
+      <p className="mt-3 max-w-3xl leading-7 text-slate-600">Current circulating-coin dimensions use U.S. Mint specifications. Historical type dimensions were checked against PCGS CoinFacts. Some historic open-collar coins vary by specimen, so approximate values and ranges are labeled.</p>
+      <ul className="mt-4 space-y-2 text-sm">
+        {Object.values(diameterSources).map((source) => <li key={source.name}><a className="font-semibold text-[#a47d13] underline" href={source.url} rel="noreferrer" target="_blank">{source.name}</a></li>)}
+      </ul>
+    </section>
 
     <section className="border border-slate-200 bg-white p-7 shadow-sm md:flex md:items-center md:justify-between md:gap-8 md:p-9">
         <div>

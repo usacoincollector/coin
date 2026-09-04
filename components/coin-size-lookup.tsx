@@ -1,19 +1,26 @@
 'use client';
 
 import { useId, useMemo, useState } from 'react';
-import { coinSizes, getHolder, holderSizes, type CoinSizeRecord, type HolderId } from '@/lib/coin-sizing';
+import { coinSizes, formatCoinDiameter, formatMillimeters, getHolder, holderSizes, type CoinSizeRecord, type HolderId } from '@/lib/coin-sizing';
 
 type LookupMode = 'holder' | 'coin';
 
 function CoinResult({ coin, featured = false }: { coin: CoinSizeRecord; featured?: boolean }) {
-  const holder = getHolder(coin.holderId);
+  const holder = coin.holderId ? getHolder(coin.holderId) : null;
   return (
     <article className={`border border-slate-200 bg-white p-5 shadow-sm ${featured ? 'md:p-7' : ''}`}>
       <h3 className="font-serif text-2xl font-normal leading-tight text-slate-950">{coin.name}</h3>
       <div className={`mt-5 border-l-4 border-[#d5b865] bg-[#f8f7f3] ${featured ? 'p-5' : 'p-4'}`}>
-        <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Recommended holder</p>
-        <p className="mt-2 text-lg font-bold text-[#102a63]">{holder.name} — {holder.openingMm}</p>
-        <p className="mt-1 text-sm text-slate-600">Coin Shield 2×2 cardboard coin holder</p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Actual coin diameter</p>
+            <p className="mt-2 text-lg font-bold text-slate-950">{formatCoinDiameter(coin)}</p>
+          </div>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">Recommended holder</p>
+            <p className="mt-2 text-lg font-bold text-[#102a63]">{holder ? `${holder.name} — ${formatMillimeters(holder.sizeMm)}` : 'No recommended Coin Shield 2×2 size currently available'}</p>
+          </div>
+        </div>
       </div>
       {coin.note && <p className="mt-4 text-sm leading-6 text-slate-600">{coin.note}</p>}
     </article>
@@ -74,7 +81,7 @@ export function CoinSizeLookup() {
             <label className="block max-w-xl" htmlFor="holder-size">
               <span className="mb-2 block text-sm font-bold text-slate-900">Select a Coin Shield holder size</span>
               <select className="min-h-12 w-full border border-slate-300 bg-white px-4 py-3 text-base text-slate-900 outline-none focus:border-[#a47d13] focus:ring-2 focus:ring-[#d5b865]/50" id="holder-size" onChange={(event) => setHolderId(event.target.value as HolderId)} value={holderId}>
-                {holderSizes.map((holder) => <option key={holder.id} value={holder.id}>{holder.name} — {holder.openingMm}</option>)}
+                {holderSizes.map((holder) => <option key={holder.id} value={holder.id}>{holder.name} — {formatMillimeters(holder.sizeMm)}</option>)}
               </select>
             </label>
             <div className="mt-8 flex flex-wrap items-end justify-between gap-3 border-b border-slate-300 pb-4">
@@ -82,7 +89,7 @@ export function CoinSizeLookup() {
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#a47d13]">{getHolder(holderId).name} holder</p>
                 <h3 className="mt-2 font-serif text-3xl font-normal text-slate-950">{holderCoins.length} compatible {holderCoins.length === 1 ? 'coin' : 'coins'}</h3>
               </div>
-              <p className="text-sm text-slate-600">Opening: <strong className="text-slate-900">{getHolder(holderId).openingMm}</strong></p>
+              <p className="text-sm text-slate-600">Holder size: <strong className="text-slate-900">{formatMillimeters(getHolder(holderId).sizeMm)}</strong></p>
             </div>
             <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{holderCoins.map((coin) => <CoinResult coin={coin} key={coin.name} />)}</div>
           </div>

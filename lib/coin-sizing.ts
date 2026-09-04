@@ -32,13 +32,23 @@ export const coinSizes: CoinSizeRecord[] = [
   { name: 'Flying Eagle Cent (1856–1858)', holderId: 'penny', aliases: ['flying eagle penny'] },
   { name: 'Indian Head Cent (1859–1909)', holderId: 'penny', aliases: ['indian head penny'] },
   { name: 'Lincoln Wheat Penny (1909–1958)', holderId: 'penny', aliases: ['wheat cent', 'wheat penny'] },
-  { name: 'Draped Bust Dime (1796–1807)', holderId: 'penny' },
-  { name: 'Capped Bust Dime (1809–1837)', holderId: 'penny' },
+  {
+    name: 'Capped Bust Dime, Large Size (1809–1827)',
+    holderId: 'penny',
+    aliases: ['large size capped bust dime'],
+    note: 'Approximately 18.8–19.0 mm; confirm the individual coin diameter before selecting a holder.'
+  },
   { name: 'US Nickel', holderId: 'nickel', aliases: ['five cent', '5 cent'] },
   { name: 'Liberty Head Nickel (1883–1913)', holderId: 'nickel', aliases: ['v nickel'] },
   { name: 'Buffalo / Indian Head Nickel (1913–1938)', holderId: 'nickel', aliases: ['buffalo nickel', 'indian head nickel'] },
   { name: 'Jefferson Nickel (1938–date)', holderId: 'nickel' },
   { name: 'US Dime', holderId: 'dime', aliases: ['ten cent', '10 cent'] },
+  {
+    name: 'Capped Bust Dime, Small Size (1828–1837)',
+    holderId: 'dime',
+    aliases: ['small size capped bust dime'],
+    note: 'Approximately 17.9–18.5 mm; confirm the individual coin diameter because diameter varies within this era.'
+  },
   { name: 'Copper-Nickel Three Cent (1865–1889)', holderId: 'dime', aliases: ['three cent nickel', 'trime'] },
   { name: 'Seated Liberty Dime (1837–1891)', holderId: 'dime' },
   { name: 'Barber Dime (1892–1916)', holderId: 'dime' },

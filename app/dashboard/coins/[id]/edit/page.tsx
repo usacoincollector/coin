@@ -3,9 +3,10 @@ import Link from 'next/link';
 import { createServerClient } from '@/lib/supabase-server';
 import { CoinForm } from '@/components/coin-form';
 
-export default async function EditCoinPage({ params }: { params: { id: string } }) {
-  const supabase = createServerClient();
-  const { data: coin, error } = await supabase.from('coins').select('*').eq('id', params.id).single();
+export default async function EditCoinPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const supabase = await createServerClient();
+  const { data: coin, error } = await supabase.from('coins').select('*').eq('id', id).single();
 
   if (error || !coin) {
     notFound();

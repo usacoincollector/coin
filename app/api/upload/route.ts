@@ -11,7 +11,7 @@ const MIME_EXTENSION_MAP: Record<string, string> = {
 };
 
 export async function POST(request: Request) {
-  const supabase = createRouteClient();
+  const supabase = await createRouteClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();

@@ -4,8 +4,9 @@ import { coinInputSchema } from '@/lib/validation';
 
 const coinSchema = coinInputSchema;
 
-export async function PATCH(request: Request, { params }: { params: { id: string } }) {
-  const supabase = createRouteClient();
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const supabase = await createRouteClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();
@@ -36,7 +37,7 @@ export async function PATCH(request: Request, { params }: { params: { id: string
       image_urls: payload.image_urls,
       updated_at: new Date().toISOString()
     })
-    .eq('id', params.id)
+    .eq('id', id)
     .eq('user_id', user.id);
 
   if (error) {
@@ -46,8 +47,9 @@ export async function PATCH(request: Request, { params }: { params: { id: string
   return NextResponse.json({ ok: true });
 }
 
-export async function DELETE(_request: Request, { params }: { params: { id: string } }) {
-  const supabase = createRouteClient();
+export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const supabase = await createRouteClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();
@@ -56,7 +58,7 @@ export async function DELETE(_request: Request, { params }: { params: { id: stri
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const { error } = await supabase.from('coins').delete().eq('id', params.id).eq('user_id', user.id);
+  const { error } = await supabase.from('coins').delete().eq('id', id).eq('user_id', user.id);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 400 });

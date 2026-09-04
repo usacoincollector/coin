@@ -14,17 +14,19 @@ export function generateStaticParams() {
     .map(({ slug }) => ({ slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  if (params.slug === TRUMP_DOLLAR_SLUG) return trumpDollarMetadata;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  if (slug === TRUMP_DOLLAR_SLUG) return trumpDollarMetadata;
 
-  const article = getEducationArticle(params.slug);
+  const article = getEducationArticle(slug);
   return article ? { title: `${article.title} | USA Coin Collector`, description: article.summary } : {};
 }
 
-export default function EducationArticlePage({ params }: { params: { slug: string } }) {
-  if (params.slug === TRUMP_DOLLAR_SLUG) return <TrumpDollarGuidePage />;
+export default async function EducationArticlePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  if (slug === TRUMP_DOLLAR_SLUG) return <TrumpDollarGuidePage />;
 
-  const article = getEducationArticle(params.slug);
+  const article = getEducationArticle(slug);
   if (!article) notFound();
 
   return (

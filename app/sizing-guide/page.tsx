@@ -5,11 +5,11 @@ import { coinSizes, diameterSources, formatCoinDiameter, formatMillimeters, hold
 
 export const metadata: Metadata = {
   title: 'Coin Sizing Guide | USA Coin Collector',
-  description: 'Find the correct Coin Shield 2x2 cardboard coin holder opening for common US coins.',
+  description: 'Find the correct Coin Shield 2x2 cardboard coin holder size for common US coins.',
   alternates: { canonical: '/sizing-guide' },
   openGraph: {
     title: 'Coin Sizing Guide | USA Coin Collector',
-    description: 'Find the correct Coin Shield 2x2 cardboard coin holder opening for common US coins.',
+    description: 'Find the correct Coin Shield 2x2 cardboard coin holder size for common US coins.',
     url: '/sizing-guide',
     type: 'website'
   }
@@ -55,6 +55,15 @@ export default function SizingGuidePage() {
 
       <CoinSizeLookup />
 
+      <aside className="border border-slate-200 bg-[#f8f7f3] px-6 py-5 text-center shadow-sm" aria-label="Sizing help">
+        <p className="text-base text-slate-700">
+          Can&apos;t find your coin?{' '}
+          <Link className="font-bold text-[#102a63] underline decoration-[#d5b865] decoration-2 underline-offset-4 hover:text-[#a47d13]" href="/contact-us">
+            Contact Us
+          </Link>
+        </p>
+      </aside>
+
       <details className="border border-slate-200 bg-white shadow-sm">
       <summary className="cursor-pointer px-6 py-5 font-serif text-2xl text-slate-950 md:px-8">
         Browse the complete coin compatibility directory
@@ -67,7 +76,7 @@ export default function SizingGuidePage() {
           Complete Coin Shield Holder Compatibility Directory
         </h2>
         <p className="mt-3 max-w-3xl leading-7 text-slate-600">
-          Browse every coin in the sizing database. Each entry lists the recommended Coin Shield holder opening.
+          Browse every coin in the sizing database. Each entry lists the actual coin diameter and recommended Coin Shield holder size.
         </p>
         <div className="mt-8 space-y-10">
           {holderSizes.map((holder) => {

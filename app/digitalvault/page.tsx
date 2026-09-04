@@ -4,7 +4,8 @@ import { createServerClient } from '@/lib/supabase-server';
 import { isSupabaseConfigured } from '@/lib/supabase-config';
 
 export default async function DigitalVaultPage() {
-  const user = isSupabaseConfigured() ? (await createServerClient().auth.getUser()).data.user : null;
+  const supabase = isSupabaseConfigured() ? await createServerClient() : null;
+  const user = supabase ? (await supabase.auth.getUser()).data.user : null;
 
   return (
     <section className="space-y-8">

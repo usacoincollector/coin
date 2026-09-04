@@ -1,6 +1,6 @@
 ﻿'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createBrowserClient } from '@/lib/supabase-browser';
@@ -15,22 +15,17 @@ export function AuthForm({ mode, emailVerified = false, passwordReset = false }:
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(() => {
+    if (mode !== 'login') return '';
+    if (emailVerified) return 'Your email was verified successfully. You can now log in.';
+    if (passwordReset) return 'Your password was reset successfully. You can now log in.';
+    return '';
+  });
   const [showVerifyPopup, setShowVerifyPopup] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const duplicateEmailError =
     'This email address already has an account, please use the Forgot password link to reset your password.';
-
-  useEffect(() => {
-    if (mode !== 'login') return;
-
-    if (emailVerified) {
-      setMessage('Your email was verified successfully. You can now log in.');
-    } else if (passwordReset) {
-      setMessage('Your password was reset successfully. You can now log in.');
-    }
-  }, [emailVerified, mode, passwordReset]);
 
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();

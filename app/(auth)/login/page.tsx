@@ -5,11 +5,12 @@ import { EmailVerifiedPopup } from '@/components/email-verified-popup';
 import { createServerClient } from '@/lib/supabase-server';
 
 type LoginPageProps = {
-  searchParams?: { emailVerified?: string; passwordReset?: string; verified?: string; reset?: string };
+  searchParams?: Promise<{ emailVerified?: string; passwordReset?: string; verified?: string; reset?: string }>;
 };
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
-  const supabase = createServerClient();
+  const query = await searchParams;
+  const supabase = await createServerClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();
@@ -25,9 +26,9 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         ← Back to homepage
       </Link>
       <AuthForm
-        emailVerified={searchParams?.emailVerified === '1' || searchParams?.verified === '1'}
+        emailVerified={query?.emailVerified === '1' || query?.verified === '1'}
         mode="login"
-        passwordReset={searchParams?.passwordReset === '1' || searchParams?.reset === '1'}
+        passwordReset={query?.passwordReset === '1' || query?.reset === '1'}
       />
     </section>
   );

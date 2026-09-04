@@ -1,19 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export function EmailVerifiedPopup() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    if (searchParams.get('verified') === '1') {
-      setOpen(true);
-    }
-  }, [searchParams]);
+  const open = searchParams.get('verified') === '1';
 
   if (!open) {
     return null;
@@ -24,7 +17,6 @@ export function EmailVerifiedPopup() {
     params.delete('verified');
     const queryString = params.toString();
     router.replace(queryString ? `${pathname}?${queryString}` : pathname);
-    setOpen(false);
   };
 
   return (

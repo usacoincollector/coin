@@ -3,7 +3,7 @@ import { createRouteClient } from '@/lib/supabase-route';
 import { getStripeClient } from '@/lib/stripe';
 
 export async function POST() {
-  const supabase = createRouteClient();
+  const supabase = await createRouteClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();

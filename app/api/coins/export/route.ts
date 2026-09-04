@@ -18,9 +18,9 @@ function toDateOnly(value: string | null, timeZone: string) {
 }
 
 export async function GET() {
-  const requestHeaders = headers();
+  const requestHeaders = await headers();
   const timeZone = requestHeaders.get('x-vercel-ip-timezone') || requestHeaders.get('x-time-zone') || 'America/New_York';
-  const supabase = createRouteClient();
+  const supabase = await createRouteClient();
   const {
     data: { user }
   } = await supabase.auth.getUser();

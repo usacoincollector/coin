@@ -6,7 +6,7 @@ import { DeleteCoinButton } from '@/components/delete-coin-button';
 import { LogoutButton } from '@/components/logout-button';
 
 export default async function DashboardPage() {
-  const supabase = createServerClient();
+  const supabase = await createServerClient();
 
   const {
     data: { user }

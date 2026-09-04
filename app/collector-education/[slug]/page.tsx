@@ -2,17 +2,28 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { educationArticles, getEducationArticle } from '@/lib/collector-education';
+import TrumpDollarGuidePage, {
+  metadata as trumpDollarMetadata
+} from '../2026-trump-dollar-july-4-privy-mark/page';
+
+const TRUMP_DOLLAR_SLUG = '2026-trump-dollar-july-4-privy-mark';
 
 export function generateStaticParams() {
-  return educationArticles.map(({ slug }) => ({ slug }));
+  return educationArticles
+    .filter(({ slug }) => slug !== TRUMP_DOLLAR_SLUG)
+    .map(({ slug }) => ({ slug }));
 }
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
+  if (params.slug === TRUMP_DOLLAR_SLUG) return trumpDollarMetadata;
+
   const article = getEducationArticle(params.slug);
   return article ? { title: `${article.title} | USA Coin Collector`, description: article.summary } : {};
 }
 
 export default function EducationArticlePage({ params }: { params: { slug: string } }) {
+  if (params.slug === TRUMP_DOLLAR_SLUG) return <TrumpDollarGuidePage />;
+
   const article = getEducationArticle(params.slug);
   if (!article) notFound();
 

@@ -4,6 +4,7 @@ import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.usacoincollector.com'),
   title: 'USA Coin Collector',
   description: 'Professional coin collecting supplies and a secure digital vault for collectors.',
   icons: {

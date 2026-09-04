@@ -45,27 +45,6 @@ const features = [
   }
 ];
 
-<<<<<<< ours
-=======
-const learningGuides = [
-  {
-    title: '2026 Trump $1 Coin Privy Mark',
-    copy: 'Find the limited July 4th privy mark and learn the correct holder size.',
-    href: '/collector-education/2026-trump-dollar-july-4-privy-mark'
-  },
-  {
-    title: 'How to Protect Your Coins',
-    copy: 'Best practices for preserving the condition and value of your coins.',
-    href: '/faq#protect'
-  },
-  {
-    title: 'Choosing the Right Storage',
-    copy: 'Compare storage solutions and find what works for your collection.',
-    href: '/faq#storage'
-  }
-];
-
->>>>>>> theirs
 export default function HomePage() {
   return (
     <div className="space-y-14 pb-12">

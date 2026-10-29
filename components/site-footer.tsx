@@ -10,7 +10,8 @@ const navLinks = [
 const supportLinks = [
   { href: '/shipping', label: 'Shipping & Returns' },
   { href: '/faq', label: 'FAQs' },
-  { href: '/contact-us', label: 'Contact' }
+  { href: '/contact-us', label: 'Contact' },
+  { href: '/privacy-policy', label: 'Privacy Policy' }
 ];
 
 const storefrontLinks = [
